@@ -1,0 +1,4 @@
+Dataset 1 : national_male.csv,Dataset 2 : national_female.csv
+f1d: Pretended to be a different kind of person online from who I really am
+,z,z^2,99% (2.58),95% (1.96),n1,n2,n1+n2,p1,1-p1,p2,1-p2,p^,SEp
+v,2.24,5.03,Accept,Reject,740,928,1668,0.09,0.91,0.06,0.94,0.07,0.01

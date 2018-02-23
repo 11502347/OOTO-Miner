@@ -1,6 +1,6 @@
 v,a9,Main language spoken at home
-b,Group b
 a,Group a
+b,Group b
 c,Group c
 d,Group d
 e,Group e
@@ -10,7 +10,6 @@ h,Group h
 i,Group i
 j,Group j
 v,reg1,Region
-l,Group l
 a,Group a
 b,Group b
 c,Group c
@@ -22,14 +21,14 @@ h,Group h
 i,Group i
 j,Group j
 k,Group k
+l,Group l
 m,Group m
 n,Group n
-o,Group o
 p,Group p
 q,Group q
 r,Group r
+o,Group o
 v,prov1,Province
-p,Group p
 a,Group a
 b,Group b
 c,Group c
@@ -45,6 +44,7 @@ l,Group l
 m,Group m
 n,Group n
 o,Group o
+p,Group p
 q,Group q
 r,Group r
 s,Group s
@@ -124,8 +124,8 @@ b,Group b
 v,a5,Schooling
 a,Group a
 b,Group b
-c,Group c
 x,Group x
+c,Group c
 v,b1,How old were you when you first used the internet?
 v,b3,Are you able to access the internet when you want to or need to?
 a,Group a
@@ -961,8 +961,8 @@ a,Group a
 b,Group b
 x,Group x
 v,h1,Here is a picture of a ladder. The top of the ladder ‘10’ is the best possible life for you and the bottom ‘0’ is the worst possible life for you. In general; where on the ladder do you feel you stand at the moment? Mark the circle next to the number that best describes where you stand.
-b,Group b
 a,Group a
+b,Group b
 v,h2a,Your mother or father (including step/foster mother or father)
 a,Group a
 b,Group b

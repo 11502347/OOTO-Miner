@@ -74,7 +74,7 @@ public class ChiTestController {
 			if(mainFrame.getCmbSEPFeatures().getItemCount()<=0)
 			{
 				if(questionList.isEmpty())
-					questionList = PreprocessorIO.readQuestions(initVarDiscPath);
+					questionList = PreprocessorIO.readQuestions(initVarDiscPath, "^");
 				
 				ArrayList<String>questions = new ArrayList<>(); 
 				
@@ -275,7 +275,7 @@ public class ChiTestController {
 				
 				
 				if(questionList.isEmpty())
-					questionList = preprocessor.PreprocessorIO.readQuestions(initVarDiscPath);
+					questionList = preprocessor.PreprocessorIO.readQuestions(initVarDiscPath, "^");
 				
 				for (Feature q:questionList) {
 					//TEST

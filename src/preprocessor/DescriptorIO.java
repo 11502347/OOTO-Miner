@@ -131,7 +131,7 @@ public class DescriptorIO {
         
     }
 
-    public void exportVariables(ArrayList<Feature> questionList, String filePath) {
+    public void exportVariables(ArrayList<Feature> questionList, String filePath, String varMark) {
      //   System.out.println("\n********\nEXPORTING VARIABLES\n*******");
         //String export = "";
         PrintWriter pw;
@@ -141,7 +141,7 @@ public class DescriptorIO {
 	        for (Feature q : questionList) {
 	       //     System.out.println("Exporting " + q.getCode() + ". . .");        	
 //	        	export += 
-	        	pw.write("V," + q.getCode() + "," + q.getDescription() + "\n");
+	        	pw.write(varMark+"," + q.getCode() + "," + q.getDescription() + "\n");
 	            for (Response r : q.getResponseList()) {
 	                //export += 
 	            	pw.write(r.getGroup() + "," + r.getKey() + "," + r.getDescription() + "\n");

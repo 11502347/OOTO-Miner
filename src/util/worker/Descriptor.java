@@ -44,7 +44,7 @@ public class Descriptor extends SwingWorker<Void, Void>{
 	protected void done(){
 		String filePath = "InitialVarDesc.csv";
 		SwingUpdater.appendJTextAreaText(mainFrame.getTextAreaDescriptorStatus(), "PROCESS: Exporting variable descriptions. . .\n");
-        ip.exportVariables(varQuestions, filePath);
+        ip.exportVariables(varQuestions, filePath, "^");
 	    
 	    SwingUpdater.appendJTextAreaText(mainFrame.getTextAreaDescriptorStatus(), "DONE! Variable Description saved as " + filePath + "\n");
 	}

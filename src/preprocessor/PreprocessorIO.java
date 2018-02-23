@@ -33,7 +33,7 @@ public class PreprocessorIO {
 
 
 	
-	public static ArrayList<Feature> readQuestions(String fileName) {
+	public static ArrayList<Feature> readQuestions(String fileName, String varMark) {
 		BufferedReader br;
 		String line;
 		String[] lineSplit;
@@ -47,7 +47,7 @@ public class PreprocessorIO {
 			//remove parent questions
 			while ((line = br.readLine()) != null) {
 				lineSplit = line.split(",");
-				if (line.startsWith("V")) {
+				if (line.startsWith(varMark)) {
 						question = new Feature();
 						questionList.add(question);
 						question.setCode(lineSplit[1]);
