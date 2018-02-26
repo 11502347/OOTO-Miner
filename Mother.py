@@ -16,6 +16,7 @@ try:
 except ImportError:
     import tkinter.ttk as ttk
     py3 = 1
+# from Tkinter import tkFileDialog
 
 import Mother_support
 
@@ -23,6 +24,7 @@ def vp_start_gui():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = Tk()
+    root.resizable(0, 0)
     Mother_support.set_Tk_var()
     top = OOTO_Miner (root)
     Mother_support.init(root, top)
@@ -44,15 +46,15 @@ def destroy_OOTO_Miner():
     w.destroy()
     w = None
 
-
 class OOTO_Miner:
+
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
         _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
         _fgcolor = '#000000'  # X11 color: 'black'
         _compcolor = '#d9d9d9' # X11 color: 'gray85'
-        _ana1color = '#d9d9d9' # X11 color: 'gray85' 
+        _ana1color = '#d9d9d9' # X11 color: 'gray85'
         _ana2color = '#d9d9d9' # X11 color: 'gray85' 
         self.style = ttk.Style()
         if sys.platform == "win32":
@@ -68,7 +70,6 @@ class OOTO_Miner:
         top.configure(background="#d9d9d9")
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="black")
-
 
 
         self.menubar = Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
@@ -88,13 +89,17 @@ class OOTO_Miner:
         self.buttonTest.configure(pady="0")
         self.buttonTest.configure(text='''Test''')
 
+        strarrTestType = ["Chi-test","Z-score statistics of pooled proportions","Standard Error of Population"]
         self.comboBoxTestType = ttk.Combobox(top)
         self.comboBoxTestType.place(relx=0.01, rely=0.02, relheight=0.04
                 , relwidth=0.49)
         self.comboBoxTestType.configure(exportselection="0")
         self.comboBoxTestType.configure(textvariable=Mother_support.combobox)
         self.comboBoxTestType.configure(takefocus="")
+        self.comboBoxTestType.configure(values=strarrTestType)
 
+
+        '''
         self.buttonTestType = Button(top)
         self.buttonTestType.place(relx=0.01, rely=0.07, height=23, width=486)
         self.buttonTestType.configure(activebackground="#d9d9d9")
@@ -105,7 +110,20 @@ class OOTO_Miner:
         self.buttonTestType.configure(highlightbackground="#d9d9d9")
         self.buttonTestType.configure(highlightcolor="black")
         self.buttonTestType.configure(pady="0")
-        self.buttonTestType.configure(text='''Select Test''')
+        self.buttonTestType.configure(text=''Select Test'')
+        '''
+
+        self.textTestType = Label(top)
+        self.textTestType.place(relx=0.01, rely=0.07, height=23, width=486)
+        self.textTestType.configure(activebackground="#d9d9d9")
+        self.textTestType.configure(activeforeground="#000000")
+        self.textTestType.configure(background="#d9d9d9")
+        self.textTestType.configure(disabledforeground="#a3a3a3")
+        self.textTestType.configure(foreground="#000000")
+        self.textTestType.configure(highlightbackground="#d9d9d9")
+        self.textTestType.configure(highlightcolor="black")
+        self.textTestType.configure(pady="0")
+        self.textTestType.configure(text="WARNING: No Selected Test")
 
         self.entryPopulation = Entry(top)
         self.entryPopulation.place(relx=0.01, rely=0.12, relheight=0.04
@@ -166,20 +184,16 @@ class OOTO_Miner:
         self.labelFeature.configure(highlightcolor="black")
         self.labelFeature.configure(text='''Feature''')
 
-        self.textFeature = Text(self.labelFrameZTest)
+        self.textFeature = Label(self.labelFrameZTest)
         self.textFeature.place(relx=0.17, rely=0.17, relheight=0.1, relwidth=0.8)
-
-        self.textFeature.configure(background="white")
-        self.textFeature.configure(exportselection="0")
-        self.textFeature.configure(font="TkTextFont")
-        self.textFeature.configure(foreground="black")
+        self.textFeature.configure(activebackground="#d9d9d9")
+        self.textFeature.configure(activeforeground="#000000")
+        self.textFeature.configure(background="#d9d9d9")
+        self.textFeature.configure(disabledforeground="#a3a3a3")
+        self.textFeature.configure(foreground="#000000")
         self.textFeature.configure(highlightbackground="#d9d9d9")
         self.textFeature.configure(highlightcolor="black")
-        self.textFeature.configure(insertbackground="black")
-        self.textFeature.configure(selectbackground="#c4c4c4")
-        self.textFeature.configure(selectforeground="black")
-        self.textFeature.configure(width=384)
-        self.textFeature.configure(wrap=WORD)
+        self.textFeature.configure(pady="0")
 
         self.listAttributes = Listbox(self.labelFrameZTest)
         self.listAttributes.place(relx=0.02, rely=0.27, relheight=0.68
@@ -194,6 +208,7 @@ class OOTO_Miner:
         self.listAttributes.configure(selectbackground="#c4c4c4")
         self.listAttributes.configure(selectforeground="black")
         self.listAttributes.configure(width=454)
+        self.listAttributes.configure(selectmode=MULTIPLE)
 
         self.entryCriticalValue = Entry(self.labelFrameZTest)
         self.entryCriticalValue.place(relx=0.25, rely=0.05, relheight=0.04
@@ -328,6 +343,7 @@ class OOTO_Miner:
         self.listFeatA.configure(selectbackground="#c4c4c4")
         self.listFeatA.configure(selectforeground="black")
         self.listFeatA.configure(width=224)
+        self.listFeatA.configure(selectmode=MULTIPLE)
 
         self.listFeatB = Listbox(self.labelFrameGenerateSamples)
         self.listFeatB.place(relx=0.51, rely=0.31, relheight=0.58, relwidth=0.46)
@@ -342,6 +358,7 @@ class OOTO_Miner:
         self.listFeatB.configure(selectbackground="#c4c4c4")
         self.listFeatB.configure(selectforeground="black")
         self.listFeatB.configure(width=224)
+        self.listFeatB.configure(selectmode=MULTIPLE)
 
         self.buttonSaveDatasets = Button(self.labelFrameGenerateSamples)
         self.buttonSaveDatasets.place(relx=0.02, rely=0.91, height=33, width=466)
@@ -381,33 +398,104 @@ class OOTO_Miner:
         self.entryFeatB.configure(insertbackground="black")
         self.entryFeatB.configure(selectbackground="#c4c4c4")
         self.entryFeatB.configure(selectforeground="black")
+        '''
+        BINDING ELEMENTS
+        notes: bind the functions as objects ( ie. setPopulation not setPopulation() )
+        <Button-1> On left click
+        <<ComboboxSelected>>
+        
+        '''
+        print 'binding elements'
+        self.buttonPopulation.bind('<Button-1>', self.setPopulation)
+        self.buttonSample.bind('<Button-1>', self.setSample)
+        self.buttonFocus.bind('<Button-1>', self.setFocus)
+        self.buttonShowA.bind('<Button-1>', self.setFeatA)
+        self.buttonShowB.bind('<Button-1>', self.setFeatB)
+        self.buttonSaveDatasets.bind('<Button-1>', self.saveDataset)
+        self.buttonGetFeat.bind('<Button-1>', self.getFeat)
+        self.buttonTest.bind('<Button-1>', self.test)
 
-    @staticmethod
-    def popup1(event):
-        Popupmenu1 = Menu(root, tearoff=0)
-        Popupmenu1.configure(activebackground="#f9f9f9")
-        Popupmenu1.configure(activeborderwidth="1")
-        Popupmenu1.configure(activeforeground="black")
-        Popupmenu1.configure(background="#d9d9d9")
-        Popupmenu1.configure(borderwidth="1")
-        Popupmenu1.configure(disabledforeground="#a3a3a3")
-        Popupmenu1.configure(font="{Segoe UI} 9")
-        Popupmenu1.configure(foreground="black")
-        Popupmenu1.post(event.x_root, event.y_root)
+        self.comboBoxTestType.bind('<<ComboboxSelected>>', self.setTest)
 
-    @staticmethod
-    def popup2(event):
-        Popupmenu2 = Menu(root, tearoff=0)
-        Popupmenu2.configure(activebackground="#f9f9f9")
-        Popupmenu2.configure(activeborderwidth="1")
-        Popupmenu2.configure(activeforeground="black")
-        Popupmenu2.configure(background="#d9d9d9")
-        Popupmenu2.configure(borderwidth="1")
-        Popupmenu2.configure(disabledforeground="#a3a3a3")
-        Popupmenu2.configure(font="{Segoe UI} 9")
-        Popupmenu2.configure(foreground="black")
-        Popupmenu2.post(event.x_root, event.y_root)
+    '''
+    DEFINING BOUND COMMANDS
+    '''
+    # UPLOAD MODULE
+    def setPopulation(self, evt):
+        # populationDir = askopenfile(initialdir = "/",title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))
+        populationDir = "This is the directory of the population file"
+        self.entryPopulation.delete(0, END)
+        self.entryPopulation.insert(0, populationDir)
+        print "It enters the function: setPopulation !"
 
+    # SET FEATURES A
+    def setFeatA(self, evt):
+        # Here is how to get the value from entryFeatA
+        featACode = self.entryFeatA.get()
+        print 'Yo FeatA', featACode
+        #Get proper list of features from initial variable description
+        self.listFeatA.delete(0, END)
+        arrTempItemsA = ['A1', 'B1', 'C1', 'D1']
+        for A in arrTempItemsA:
+            self.listFeatA.insert(END, A)
+
+    # SET FEATURES B
+    def setFeatB(self, evt):
+        # Here is how to get the value from entryFeatB
+        featBCode = self.entryFeatB.get()
+        print 'Yo FeatB', featBCode
+        # Get proper list of features from initial variable description
+        self.listFeatB.delete(0, END)
+        arrTempItemsB = ['A2', 'B2', 'C2', 'D2']
+        for B in arrTempItemsB:
+            self.listFeatB.insert(END, B)
+
+    # GET FEATURE CODE AND SET SAMPLE
+    def setSample(self, evt):
+        # Here is how to get the value from entrySample
+        sampleCode = self.entrySample.get()
+        print 'Yo Sample', sampleCode
+
+    # GET FEATURE CODE AND SET FOCUS
+    def setFocus(self, evt):
+        # Here is how to get the value from entryFocus
+        focusCode = self.entryFocus.get()
+        print 'Yo Focus', focusCode
+
+    # GENERATE AND SAVE THE DATASETS BASED ON THE INPUT
+    def saveDataset(self, evt):
+        # Save dataset
+        print 'SAVING YO'
+
+    # GET FEATURE CODE FOR Z TEST
+    def getFeat(self, evt):
+        # Here is how to get the value from Entry1
+        featCode = self.Entry1.get()
+        print 'Yo Feature', featCode
+
+        #Concat code
+        strFeature = self.Entry1.get()
+        strFeature += " : "
+        #Concat question
+        strFeature += "WHY WHY WHYYYYYYYYYYYY...delilah.."
+        self.textFeature.config(text=strFeature)
+
+        #DELETE THEN SET VALUES TO THE ATTRIBUTE LIST
+        self.listAttributes.delete(0, END)
+        arrTempItemsC = ['A3', 'B3', 'C3', 'D3']
+        for C in arrTempItemsC:
+            self.listAttributes.insert(END, C)
+
+    # DO TEST BASED ON INPUTS AND DATASETS
+    def test(self, evt):
+        # Do test here
+        print 'Test'
+
+    # SET THE TEST WHEN SELECTED IN COMBOBOX
+    def setTest(self, evt):
+        selectedTest = self.comboBoxTestType.get()
+        self.textTestType.destroy()
+        print selectedTest
 
 
 
