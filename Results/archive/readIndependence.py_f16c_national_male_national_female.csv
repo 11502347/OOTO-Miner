@@ -1,0 +1,5 @@
+Dataset 1 : national_male.csv,Dataset 2 : national_female.csv
+f16c: I felt a bit guilty about what went wrong
+Selected Values: ,1
+,z,z^2,99% (2.58),95% (1.96),n1,n2,n1+n2,p1,1-p1,p2,1-p2,p^,SEp,freq(p1),freq(p2)
+v,2.99,8.97,Reject,Reject,125,150,275,0.3,0.7,0.15,0.85,0.22,0.05,38,23

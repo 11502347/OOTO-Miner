@@ -186,7 +186,7 @@ def readTableToFloat(table):
 	return table.rows[0], rows
 
 
-def doFile(table,fileNum,results,converter,z, ccv):
+def doFile(table,fileNum,results,converter,z):
 
 	header, rows = readTableToFloat(table)
 	header , rows = sortTableColumns(header,rows)
@@ -464,7 +464,7 @@ def getTable(col,clusters,V, header):
 	return Table(groups,keys,header)
 
 
-def getVariableList(filename): #Reads the question
+def getVariableList(filename, varMarker): #Reads the question
 	variables = {}	
 
 	
@@ -472,7 +472,7 @@ def getVariableList(filename): #Reads the question
 	    readCSV = csv.reader(csvfile, delimiter=',')
 	    for row in readCSV:
 
-	    	if( row[0] == 'v'):
+	    	if( row[0] == varMarker):
 	    		variables[row[1]]= [row[2]]
 	    		lastVar = row[1]    	
 	    	else:
@@ -483,9 +483,8 @@ def getVariableList(filename): #Reads the question
 
 print sys.argv
 #change to ur own.
-vList = getVariableList('Updated-Variables.csv') #Get Variable Description
+vList = getVariableList('Updated-Variables.csv', '^') #Get Variable Description
 header = readHeader(sys.argv[2]) #Read the header from one of the datasets which include the question codes
-chiCriticalValues = readCSVDict('ChiScores99Confidence.csv') #Get chi square critical values at 99% confidence
 
 
 results = []
@@ -550,7 +549,7 @@ for y in range(0,len(z)):
 		print "col "+str(i)+" "+ header[i]	
 		theTable = getTable(i,clusters,vList,header[i]) #Generates a table matrix for all datasets to do the chi-test for the question
 
-		doFile(theTable,i,results,converter,z[y], chiCriticalValues) #Chi test on the question and then writing it in the file
+		doFile(theTable,i,results,converter,z[y]) #Chi test on the question and then writing it in the file
 		theTable.getPrintable(tableList)
 		print "Table",
 		print theTable.rows

@@ -11,11 +11,11 @@ from collections import Counter
 '''
 Returns the description of the given feature code and filename of the Variable Descriptor
 '''
-def getFeatureDescription(filename, feature):
+def getFeatureDescription(filename, feature, varMark):
     with open(filename) as f:
         reader = csv.reader(f)
         for row in reader:
-            if row[0] == "V":
+            if row[0] == varMark:
                 if row[1] == feature:
                     return row[2]
 '''               
@@ -120,7 +120,7 @@ initialVarDesc = sys.argv[4]#File path of Initial Variable Descriptor
 
 selectedFeature = sys.argv[5]#Feature that was selected for the test
 
-selectedFeatureDesc = getFeatureDescription(initialVarDesc, selectedFeature)#Get description of the selected Feature
+selectedFeatureDesc = getFeatureDescription(initialVarDesc, selectedFeature, '^')#Get description of the selected Feature
 
 
 featureValues = sys.argv[6].split(":") #All possible values of the feature

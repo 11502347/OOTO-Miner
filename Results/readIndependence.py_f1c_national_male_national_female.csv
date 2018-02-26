@@ -1,4 +1,0 @@
-Dataset 1 : national_male.csv,Dataset 2 : national_female.csv
-f1c: Added people to my friends or contacts I have never met face-to-face
-,z,z^2,99% (2.58),95% (1.96),n1,n2,n1+n2,p1,1-p1,p2,1-p2,p^,SEp
-v,2.32,5.4,Accept,Reject,747,944,1691,0.19,0.81,0.14,0.86,0.16,0.02

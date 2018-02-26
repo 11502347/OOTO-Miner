@@ -2,7 +2,28 @@
 """
 Created on Tue Feb 20 11:03:29 2018
 
-@author: Rgee
+@author: Rgee Gallega
+
+
+This is a program that allows you to compare a population dataset to several subgroups/samples of it, and tell whether the sample
+is significantly different from the population based on a given feature.
+
+The samples are made by dividing the population dataset into them based on the values of a given feature (sample feature).
+For example, if you choose 'Gender' as your sample feature, the samples will be the 'Male' and 'Female' samples.
+
+Comparison is done by calculating the Z-Score and Standard Error of Sample Proportion (SEp) of each sample to the population.
+NOTE: Only SEp is being used to determine whether the sample is significantly different from the population.
+      Its Z-score is only being calculated but not used for comparison. Kept just in case.
+
+To determine whether the sample is significantly different from the population,
+you calculate the upper bound (UB) and lower bound (LB) of it based on its proportion (frequency/total number) using the ff:
+
+UB = p + SEp * Z
+LB = p - SEp * Z
+
+Where Z is the Z Critical Value inputted by the user based on ά he/she desires.
+For example, if the user wants ά = 1% interval, then Z Critical Value is 2.58
+
 """
 
 import sys
@@ -47,7 +68,13 @@ def makeSamples(records, sampleFeature,sampleGroups):
         sampleGroups.append(sample)
 
         
+'''
+Get the total number (n) and frequency (f) of each sample.
 
+n is the number of records in a sample who answered any valid value in the selected feature
+f is the number of records in a sample who answered any of the chosen values in the selected feature
+
+'''
 def getSampleTotalsAndProportions(records, samples, sampleFeature, selectedFeature, allValues, selectedValues):
     for record in records:
         for sample in samples:
@@ -61,7 +88,12 @@ def getSampleTotalsAndProportions(records, samples, sampleFeature, selectedFeatu
         sample['Proportion'] = float(sample['Frequency']) / float(sample['Total'])
 
         
-            
+'''
+Get the total number (N) and frequency (F) of the population
+
+N is the number of records in the population who answered any valid value in the selected feature
+F is the number of records in the population who answered any of the chosen values in the selected feature
+'''
 def getPopTotalsAndProportions(records,selectedFeature,allValues,selectedValues):
     population = {'Total':0, 'Frequency':0}
     for record in records:
@@ -72,16 +104,25 @@ def getPopTotalsAndProportions(records,selectedFeature,allValues,selectedValues)
     population['Proportion'] = float(population['Frequency']) / float(population['Total'])
     return population
 
+
+'''
+Calculate the standard error.
+'''
 def getStandardError(p,n):
     return math.sqrt( (p * (1-p)) / float(n))
 
+'''
+Calculate the z-score between a sample and the population
+'''
 def getZScore(sample, population):
     se = getStandardError(population['Proportion'], sample['Total'])
 
     z = (sample['Proportion'] - population['Proportion']) / se
 
     return z,se
-
+'''
+Write the results of samples vs population in a file
+'''
 def makeResults(header, samples, population, zCriticalValue, fileName):
     rows = []
     rows.append(header)
@@ -103,7 +144,9 @@ def makeResults(header, samples, population, zCriticalValue, fileName):
     
     writeOnCSV(rows, fileName)
 
-
+'''
+Call this method to initiate the Sample vs Population
+'''
 def sampleVsPopulation(popDatasetPath, sampleFeature, selectedFeature, allValues, selectedValues, zCriticalValue):
     delimiter = ':'
 
@@ -111,7 +154,7 @@ def sampleVsPopulation(popDatasetPath, sampleFeature, selectedFeature, allValues
 
     samples = []
 
-    makeSamples(records, sampleFeature,samples)#Make the samples from the population dataset
+    makeSamples(records, sampleFeature,samples)#Make the samples from the population raw dataset
 
     records = readCSVDict(popDatasetPath) #Read the records again because for some reason they disappear after making the sample groups
 
@@ -122,7 +165,7 @@ def sampleVsPopulation(popDatasetPath, sampleFeature, selectedFeature, allValues
     population = getPopTotalsAndProportions(records,selectedFeature,allValues,selectedValues)#Make the population and calculate N, F, and P of the population
 
     for sample in samples:
-        #Perform Z-Test against population
+        #Perform Z-Test and Standard Error of Sample Proportion avs the population
         zScore, standardError = getZScore(sample,population)#Retrieve the z-score of the sample and the standard error to the population
         sample['Z'] = zScore
         sample['Standard Error'] = standardError

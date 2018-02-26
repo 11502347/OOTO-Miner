@@ -1,0 +1,5 @@
+Dataset 1 : 9to11.csv,Dataset 2 : 12to14.csv
+a24b: I do exciting things; even if they are dangerous
+Selected Values: ,2,3
+,z,z^2,99% (2.58),95% (1.96),n1,n2,n1+n2,p1,1-p1,p2,1-p2,p^,SEp,freq(p1),freq(p2)
+v,-1.6,2.56,Accept,Accept,512,577,1089,0.2,0.8,0.24,0.76,0.22,0.03,101,137

@@ -1,0 +1,5 @@
+Dataset 1 : 9to11.csv,Dataset 2 : 15to17.csv
+f16b: I closed the window or app
+Selected Values: ,1
+,z,z^2,99% (2.58),95% (1.96),n1,n2,n1+n2,p1,1-p1,p2,1-p2,p^,SEp,freq(p1),freq(p2)
+v,1.02,1.04,Accept,Accept,54,126,180,0.22,0.78,0.16,0.84,0.18,0.06,12,20

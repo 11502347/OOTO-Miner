@@ -81,6 +81,8 @@ public class Converter {
             responses = new HashSet<>(col.getResponses());
             responses.remove("99");
             responses.remove("");
+            responses.remove("#NULL!");
+
 
             for (String response : responses) {
                 r = new Response();
@@ -96,7 +98,7 @@ public class Converter {
 
                 if (findQ.getResponseList().size() > 0) {
                     for (Response resp : findQ.getResponseList()) {
-                   	System.out.println("Response: " + resp.getGroup() + " " + resp.getKey() + " " + resp.getDescription());
+                   	//System.out.println("Response: " + resp.getGroup() + " " + resp.getKey() + " " + resp.getDescription());
                         newQ.addResponse(resp);
                     }
 

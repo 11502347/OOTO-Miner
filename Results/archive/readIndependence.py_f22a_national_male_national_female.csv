@@ -1,0 +1,5 @@
+Dataset 1 : national_male.csv,Dataset 2 : national_female.csv
+f22a: Nasty or hurtful messages were sent to me
+Selected Values: ,2
+,z,z^2,99% (2.58),95% (1.96),n1,n2,n1+n2,p1,1-p1,p2,1-p2,p^,SEp,freq(p1),freq(p2)
+v,-3.14,9.87,Reject,Reject,188,222,410,0.46,0.54,0.61,0.39,0.54,0.05,86,136

@@ -44,6 +44,7 @@ public class ChiTestController {
 	private ArrayList<Feature> questionList = new ArrayList<>();; //All the features in the file
 	
 	private SelectedFeature sf;
+	private String sampleFeature; //Sample feature to divide the population by. For SEp.
 
 	protected String initVarDiscPath = "src\\..\\InitialVarDesc.csv";
 	
@@ -130,6 +131,8 @@ public class ChiTestController {
 			break;
 		case 2: //Standard Error of Population
 			System.out.println("\n Standard Error of Population Start");
+			pe = new PythonExecutor(filesStrings, "runSVP.py"," "+sampleFeature+" "+sf.getFeature()+" "+attributesString+" "+selectedAttributesString, sampleFeature+"_"+sf.getFeature());
+			pe.Execute();
 			break;
 		}
 	}
@@ -304,7 +307,7 @@ public class ChiTestController {
 		});
 		
 		
-		//Start Button for independence test of pooled proportions
+		//Start Button for independence test of pooled proportions and sample vs population
 		mainFrame.getButtonStore().addActionListener(new ActionListener() {
 
 			@Override
@@ -315,9 +318,6 @@ public class ChiTestController {
 				selectedAttributesString="";
 				ArrayList<String> storedAttributes = new ArrayList<>();
 				int[] selectedAttributes = mainFrame.getListAttributes().getSelectedIndices();
-				
-				for(int i = 0; i < selectedAttributes.length; i++)
-					System.out.println(selectedAttributes);
 				
 				
 				for(int i = 0; i < selectedAttributes.length; i++) {
@@ -347,6 +347,11 @@ public class ChiTestController {
 					System.out.println(sf.getFeature());
 					System.out.println(sf.getAttributes());
 					
+					if(testType==2)
+					{
+						sampleFeature = String.valueOf(mainFrame.getCmbSEPFeatures().getSelectedItem());
+						System.out.println("Sample Feature: "+sampleFeature);
+					}
 					
 					
 					startTest(); 

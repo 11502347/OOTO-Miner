@@ -24,7 +24,24 @@ public class PythonExecutor {
 		this.filenames = files;
 		this.testType = testType; 
 		this.addtlParams = addtlParams;
-		saveFile = testType;
+		
+		
+		String testName = "Test";
+		
+		switch(testType)
+		{
+			case "readChi.py":
+				testName = "ChiTest";
+				break;
+			case "readIndependence.py":
+				testName = "SampleVSample";
+				break;
+			case "runSVP.py":
+				testName = "SampleVPopulation";
+				break;
+		}
+		
+		saveFile = testName;
 		
 		for(String s : files)
 		{
@@ -38,7 +55,24 @@ public class PythonExecutor {
 		this.filenames = files;
 		this.testType = testType; 
 		this.addtlParams = addtlParams;
-		saveFile = testType + "_" + selectedFeature;
+		
+		String testName = "Test";
+		
+		switch(testType)
+		{
+			case "readChi.py":
+				testName = "ChiTest";
+				break;
+			case "readIndependence.py":
+				testName = "SampleVSample";
+				break;
+			case "runSVP.py":
+				testName = "SampleVPopulation";
+				break;
+		}
+		
+		
+		saveFile = testName + "_" + selectedFeature;
 		
 		for(String s : files)
 		{
@@ -92,8 +126,8 @@ public class PythonExecutor {
 			System.out.println(e);
 		}
 		
-		
-		readResults(saveFile);
+		if(testType.equalsIgnoreCase("readIndependence.py"))
+			readResults(saveFile);
 		
 		
 		

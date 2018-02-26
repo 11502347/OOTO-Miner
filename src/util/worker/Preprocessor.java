@@ -7,6 +7,7 @@ import javax.swing.SwingWorker;
 
 import model.Column;
 import model.Feature;
+import model.Response;
 import model.Entry;
 import preprocessor.Converter;
 import preprocessor.PreprocessorIO;
@@ -45,7 +46,7 @@ public class Preprocessor extends SwingWorker<Void, Integer>{
 		ArrayList<Column> columns = new ArrayList<>();
 
 		SwingUpdater.appendJTextAreaText(mainFrame.getTextAreaPreprocessorStatus(), "PROCESS: Reading input files. . .\n");
-		questionList = cp.readQuestions(varDesFilePath, "^");
+		questionList = PreprocessorIO.readQuestions(varDesFilePath, "^");
 		
 		
 		ArrayList<Entry> oldEntries = cp.readCSV(header, columns, rawFilePath, 1);
@@ -55,6 +56,18 @@ public class Preprocessor extends SwingWorker<Void, Integer>{
 		tempStrings = new ArrayList<>();
 		
 		newQuestions = conv.convertQuestions(columns, questionList, tempStrings);
+		
+		for(Feature f : newQuestions)
+		{
+			System.out.println("Question: " + f.getCode() + " : " + f.getDescription());
+			System.out.println("No. of responses: " + f.getGroupedResponseList().size());
+			/*
+			for(Response r : f.getGroupedResponseList())
+			{
+				System.out.println("\t"+"Response: " + r.getGroup() + " " + r.getDescription());
+			}
+			*/
+		}
 		
 		//convert entries
 		newEntries = conv.convertEntries(oldEntries, columns, newQuestions);
@@ -83,7 +96,10 @@ public class Preprocessor extends SwingWorker<Void, Integer>{
 		cp.exportEntries(newEntries, header, exportEntry);
 		SwingUpdater.appendJTextAreaText(mainFrame.getTextAreaPreprocessorStatus(), "DONE: Updated Dataset saved in " + exportEntry + ".\n");
 
-		cp.exportQuestions(newQuestions, exportVar);
+		
+		
+		
+		cp.exportQuestions(newQuestions, exportVar,"^");
 		SwingUpdater.appendJTextAreaText(mainFrame.getTextAreaPreprocessorStatus(), "DONE: Updated Variable Description saved in " + exportVar + ".\n");
 	
 		return null;

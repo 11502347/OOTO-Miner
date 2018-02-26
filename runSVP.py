@@ -2,16 +2,17 @@
 Sample python code in running SampleVsPopulation.py
 
 '''
-
+import sys
 import SampleVsPopulation as svp
 
+print sys.argv
 
-
-populationDataset = "C:/Users/Rgee/Google Drive/Classroom/PRC-ST1 Batch 115/Deployment/OOTO UNICEF/[CSC713M] OOTO/Datasets/ready for OOTO/nation.csv"
-sampleFeature = 'a2'
-selectedFeature = 'a24b'
-allValues = '1:2:3:4'
-selectedValues = '2:3'
+populationDataset = sys.argv[2]
+sampleFeature = sys.argv[3]
+selectedFeature = sys.argv[4]
+allValues = sys.argv[5]
+selectedValues = sys.argv[6]
 zCriticalValue = 1.96
+
 
 svp.sampleVsPopulation(populationDataset, sampleFeature, selectedFeature, allValues, selectedValues, zCriticalValue)

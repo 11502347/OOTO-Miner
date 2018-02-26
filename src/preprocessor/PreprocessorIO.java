@@ -114,7 +114,7 @@ public class PreprocessorIO {
 		return entryList;
 	}
 
-	public void exportQuestions(ArrayList<Feature> questions, String name) {
+	public void exportQuestions(ArrayList<Feature> questions, String name, String varMarker) {
 		//System.out.println("\n***********************\nEXPORTING QUESTION GROUPINGS. . ."
 		//      + "\n****************\n");
 		//String exportString = "";
@@ -124,7 +124,7 @@ public class PreprocessorIO {
 			pw = new PrintWriter(new File(name));
 			for (Feature q : questions) {
 				//exportString += "v," + q.getCode() + "," + q.getDescription() + "\n";
-				pw.write("v," + q.getCode() + "," + q.getDescription() + "\n");
+				pw.write(varMarker+"," + q.getCode() + "," + q.getDescription() + "\n");
 				for (Response r : q.getGroupedResponseList()) {
 					//exportString += r.getKey() + "," + r.getDescription() + "\n";
 					pw.write(r.getKey() + "," + r.getDescription() + "\n");
