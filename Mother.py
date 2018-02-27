@@ -521,6 +521,7 @@ class OOTO_Miner:
             self.buttonGetFeat.configure(state='disabled')
             self.buttonSample.configure(state = 'disabled')
             self.entryCriticalValue.configure(state = 'disabled')
+            self.entry
 
 
 if __name__ == '__main__':
