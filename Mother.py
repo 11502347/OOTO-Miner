@@ -50,6 +50,7 @@ def destroy_OOTO_Miner():
 
 class OOTO_Miner:
 
+    
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -99,8 +100,12 @@ class OOTO_Miner:
         self.comboBoxTestType.configure(textvariable=Mother_support.combobox)
         self.comboBoxTestType.configure(takefocus="")
         self.comboBoxTestType.configure(values=strarrTestType)
+        self.comboBoxTestType.current(0)
+        global testType
+        testType = self.comboBoxTestType.get()
+        self.adjustViews()
 
-        '''
+        ''' 
         self.buttonTestType = Button(top)
         self.buttonTestType.place(relx=0.01, rely=0.07, height=23, width=486)
         self.buttonTestType.configure(activebackground="#d9d9d9")
@@ -150,7 +155,6 @@ class OOTO_Miner:
         self.buttonPopulation.configure(highlightcolor="black")
         self.buttonPopulation.configure(pady="0")
         self.buttonPopulation.configure(text='''Upload Population''')
-        self.buttonPopulation.configure(command = addPopulation)
 
         self.labelFrameZTest = LabelFrame(top)
         self.labelFrameZTest.place(relx=0.51, rely=0.0, relheight=0.93
@@ -419,16 +423,19 @@ class OOTO_Miner:
 
         self.comboBoxTestType.bind('<<ComboboxSelected>>', self.setTest)
 
+    
+
     '''
     DEFINING BOUND COMMANDS
     '''
     # UPLOAD MODULE
     def setPopulation(self, evt):
-        # populationDir = askopenfile(initialdir = "/",title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))
-        populationDir = "This is the directory of the population file"
+        global populationDir
+        #populationDir = askopenfilename(initialdir = "/",title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))
+        populationDir = askopenfilename(title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))
         self.entryPopulation.delete(0, END)
         self.entryPopulation.insert(0, populationDir)
-        print "It enters the function: setPopulation !"
+        
 
     # SET FEATURES A
     def setFeatA(self, evt):
@@ -492,19 +499,22 @@ class OOTO_Miner:
     def test(self, evt):
         # Do test here
         print 'Test'
+        print populationDir
 
     # SET THE TEST WHEN SELECTED IN COMBOBOX
     def setTest(self, evt):
-        selectedTest = self.comboBoxTestType.get()
+        global testType
+        testType = self.comboBoxTestType.get()
         self.textTestType.destroy()
-        print selectedTest
+        self.adjustViews()
 
-
-    def addPopulation():
-        filename = askopenfilename() # show an "Open" dialog box and return the path to the selected file
-        entryPopulation.configure(textvariable=filename)
-
-
+    # DISABLE BUTTONS/ENTRIES BASED ON TEST SELECTED
+    def adjustViews(self):
+        print testType
+        #["Chi-test","Z-score statistics of pooled proportions","Standard Error of Population"]
+        if(testType == 'Chi-test'):
+            self.buttonFocus.configure(state='disabled')
+            
 
 if __name__ == '__main__':
     vp_start_gui()
