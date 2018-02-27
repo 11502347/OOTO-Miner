@@ -243,6 +243,7 @@ class OOTO_Miner:
         self.buttonGetFeat.configure(text='''Enter Feature Code''')
         self.buttonGetFeat.configure(width=156)
 
+        '''
         self.Entry1 = Entry(self.labelFrameZTest)
         self.Entry1.place(relx=0.25, rely=0.11, relheight=0.04, relwidth=0.38)
         self.Entry1.configure(background="white")
@@ -251,6 +252,7 @@ class OOTO_Miner:
         self.Entry1.configure(foreground="#000000")
         self.Entry1.configure(insertbackground="black")
         self.Entry1.configure(width=184)
+        '''
 
         self.labelFrameGenerateSamples = LabelFrame(top)
         self.labelFrameGenerateSamples.place(relx=0.01, rely=0.22, relheight=0.78
@@ -264,7 +266,7 @@ class OOTO_Miner:
         self.labelFrameGenerateSamples.configure(width=490)
 
         self.entrySample = Entry(self.labelFrameGenerateSamples)
-        self.entrySample.place(relx=0.02, rely=0.05, relheight=0.05
+        self.entrySample.place(relx=0.25, rely=0.05, relheight=0.05
                 , relwidth=0.46)
         self.entrySample.configure(background="white")
         self.entrySample.configure(disabledforeground="#a3a3a3")
@@ -276,7 +278,16 @@ class OOTO_Miner:
         self.entrySample.configure(selectbackground="#c4c4c4")
         self.entrySample.configure(selectforeground="black")
 
-        self.entryFocus = Entry(self.labelFrameGenerateSamples)
+        self.entryFocus = Entry(self.labelFrameZTest)
+        self.entryFocus.place(relx=0.25, rely=0.11, relheight=0.04, relwidth=0.38)
+        self.entryFocus.configure(background="white")
+        self.entryFocus.configure(disabledforeground="#a3a3a3")
+        self.entryFocus.configure(font="TkFixedFont")
+        self.entryFocus.configure(foreground="#000000")
+        self.entryFocus.configure(insertbackground="black")
+        self.entryFocus.configure(width=184)
+
+        '''
         self.entryFocus.place(relx=0.51, rely=0.05, relheight=0.05
                 , relwidth=0.46)
         self.entryFocus.configure(background="white")
@@ -288,9 +299,10 @@ class OOTO_Miner:
         self.entryFocus.configure(insertbackground="black")
         self.entryFocus.configure(selectbackground="#c4c4c4")
         self.entryFocus.configure(selectforeground="black")
+        '''
 
         self.buttonSample = Button(self.labelFrameGenerateSamples)
-        self.buttonSample.place(relx=0.02, rely=0.11, height=23, width=226)
+        self.buttonSample.place(relx=0.25, rely=0.11, height=23, width=226)
         self.buttonSample.configure(activebackground="#d9d9d9")
         self.buttonSample.configure(activeforeground="#000000")
         self.buttonSample.configure(background="#d9d9d9")
@@ -301,6 +313,7 @@ class OOTO_Miner:
         self.buttonSample.configure(pady="0")
         self.buttonSample.configure(text='''Enter Sample Feature''')
 
+        '''
         self.buttonFocus = Button(self.labelFrameGenerateSamples)
         self.buttonFocus.place(relx=0.51, rely=0.11, height=23, width=226)
         self.buttonFocus.configure(activebackground="#d9d9d9")
@@ -311,7 +324,8 @@ class OOTO_Miner:
         self.buttonFocus.configure(highlightbackground="#d9d9d9")
         self.buttonFocus.configure(highlightcolor="black")
         self.buttonFocus.configure(pady="0")
-        self.buttonFocus.configure(text='''Enter Focus Feature''')
+        self.buttonFocus.configure(text='Enter Focus Feature')
+        '''
 
         self.buttonShowA = Button(self.labelFrameGenerateSamples)
         self.buttonShowA.place(relx=0.02, rely=0.24, height=23, width=226)
@@ -415,7 +429,7 @@ class OOTO_Miner:
         print 'binding elements'
         self.buttonPopulation.bind('<Button-1>', self.setPopulation)
         self.buttonSample.bind('<Button-1>', self.setSample)
-        self.buttonFocus.bind('<Button-1>', self.setFocus)
+        # self.buttonFocus.bind('<Button-1>', self.setFocus)
         self.buttonShowA.bind('<Button-1>', self.setFeatA)
         self.buttonShowB.bind('<Button-1>', self.setFeatB)
         self.buttonSaveDatasets.bind('<Button-1>', self.saveDataset)
@@ -467,20 +481,23 @@ class OOTO_Miner:
         print 'Yo Sample', sampleCode
 
     # GET FEATURE CODE AND SET FOCUS
+    # THIS FUNCTION HAS BEEN MIGRATED TO getFeat
+    '''
     def setFocus(self, evt):
         # Here is how to get the value from entryFocus
         focusCode = self.entryFocus.get()
         print 'Yo Focus', focusCode
+    '''
 
     # GENERATE AND SAVE THE DATASETS BASED ON THE INPUT
     def saveDataset(self, evt):
         # Save dataset
         print 'SAVING YO'
 
-    # GET FEATURE CODE FOR Z TEST
+    # GET FEATURE CODE FOR Z TEST / SET FOCUS
     def getFeat(self, evt):
         # Here is how to get the value from Entry1
-        featCode = self.Entry1.get()
+        featCode = self.entryFocus.get()
         print 'Yo Feature', featCode
 
         #Concat code
