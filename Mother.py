@@ -50,6 +50,7 @@ def destroy_OOTO_Miner():
 
 class OOTO_Miner:
 
+
     
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
@@ -105,7 +106,7 @@ class OOTO_Miner:
         global testType
         testType = self.comboBoxTestType.get()
         
-        self.adjustViews('<<ComboboxSelected>>')
+        # self.adjustViews()
 
         ''' 
         self.buttonTestType = Button(top)
@@ -502,7 +503,7 @@ class OOTO_Miner:
         print 'Yo Feature', featCode
 
         #Concat code
-        strFeature = self.Entry1.get()
+        strFeature = self.entryFocus.get()
         strFeature += " : "
         #Concat question
         strFeature += "WHY WHY WHYYYYYYYYYYYY...delilah.."
@@ -525,20 +526,29 @@ class OOTO_Miner:
         global testType
         testType = self.comboBoxTestType.get()
         self.textTestType.destroy()
-        self.adjustViews(evt)
+        self.adjustViews()
 
     # DISABLE BUTTONS/ENTRIES BASED ON TEST SELECTED
-
-    def adjustViews(self, evt):
+    def adjustViews(self):
         print testType
-        #["Chi-test","Z-score statistics of pooled proportions","Standard Error of Population"]
+        # ["Chi-test","Z-score statistics of pooled proportions","Standard Error of Population"]
         if testType == 'Chi-test':
             self.buttonGetFeat.configure(state='disabled')
             self.labelZCriticalValue.configure(state='disabled')
             self.labelFeature.configure(state='disabled')
             self.buttonGetFeat.configure(state='disabled')
-            self.buttonSample.configure(state = 'disabled')
-            self.entryCriticalValue.configure(state = 'disabled')
+            self.buttonSample.configure(state='disabled')
+            self.entryCriticalValue.configure(state='disabled')
+
+
+        '''
+        self.buttonGetFeat.configure(state='disabled')
+        self.labelZCriticalValue.configure(state='disabled')
+        self.labelFeature.configure(state='disabled')
+        self.buttonGetFeat.configure(state='disabled')
+        self.buttonSample.configure(state = 'disabled')
+        self.entryCriticalValue.configure(state = 'disabled')
+        '''
             
 
 
