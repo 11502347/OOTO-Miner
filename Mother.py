@@ -104,7 +104,8 @@ class OOTO_Miner:
         self.comboBoxTestType.current(0)
         global testType
         testType = self.comboBoxTestType.get()
-        #self.adjustViews('<<ComboboxSelected>>')
+        
+        self.adjustViews('<<ComboboxSelected>>')
 
         ''' 
         self.buttonTestType = Button(top)
@@ -532,13 +533,13 @@ class OOTO_Miner:
         print testType
         #["Chi-test","Z-score statistics of pooled proportions","Standard Error of Population"]
         if testType == 'Chi-test':
-            self.buttonFocus.configure(state='disabled')
+            self.buttonGetFeat.configure(state='disabled')
             self.labelZCriticalValue.configure(state='disabled')
             self.labelFeature.configure(state='disabled')
             self.buttonGetFeat.configure(state='disabled')
             self.buttonSample.configure(state = 'disabled')
             self.entryCriticalValue.configure(state = 'disabled')
-            self.entry
+            
 
 
 if __name__ == '__main__':
