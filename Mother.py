@@ -100,7 +100,6 @@ class OOTO_Miner:
         self.comboBoxTestType.configure(takefocus="")
         self.comboBoxTestType.configure(values=strarrTestType)
 
-
         '''
         self.buttonTestType = Button(top)
         self.buttonTestType.place(relx=0.01, rely=0.07, height=23, width=486)
@@ -499,6 +498,7 @@ class OOTO_Miner:
         selectedTest = self.comboBoxTestType.get()
         self.textTestType.destroy()
         print selectedTest
+
 
     def addPopulation():
         filename = askopenfilename() # show an "Open" dialog box and return the path to the selected file
