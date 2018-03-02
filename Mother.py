@@ -18,7 +18,6 @@ try:
 except ImportError:
     import tkinter.ttk as ttk
     py3 = 1
-# from Tkinter import tkFileDialog
 
 import Mother_support
 
@@ -86,12 +85,14 @@ class OOTO_Miner:
         self.Tabs.add(self.Tabs_t2, padding=3)
         self.Tabs.tab(1, text="Preprocessor", underline="-1", )
 
-        '''
         self.menubar = Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
         top.configure(menu = self.menubar)
-        self.menubar.add_command(label="Preprocessor")
-        self.menubar.add_command(label="About")
+        self.menubar.add_command(label="About", command=self.showAbout)
         self.menubar.add_command(label="Help")
+
+
+        '''
+        TAB 1 - TESTS
         '''
 
         self.buttonTest = Button(self.Tabs_t1)
@@ -472,11 +473,212 @@ class OOTO_Miner:
         self.comboBoxTestType.bind('<<ComboboxSelected>>', self.setTest)
         self.comboCriticalValue.bind('<<ComboboxSelected>>', self.getCriticalValue)
 
+        '''
+        TAB 2 - PREPROCESSOR
+        '''
 
+        self.labelFrameVariableDescriptor = LabelFrame(self.Tabs_t2)
+        self.labelFrameVariableDescriptor.place(relx=0.01, rely=0.0
+                                                , relheight=0.19, relwidth=0.98)
+        self.labelFrameVariableDescriptor.configure(relief=GROOVE)
+        self.labelFrameVariableDescriptor.configure(foreground="black")
+        self.labelFrameVariableDescriptor.configure(text='''Variable Descriptor''')
+        self.labelFrameVariableDescriptor.configure(background="#d9d9d9")
+        self.labelFrameVariableDescriptor.configure(width=980)
+
+        self.labelVariableFile = Label(self.labelFrameVariableDescriptor)
+        self.labelVariableFile.place(relx=0.01, rely=0.17, height=26, width=172)
+        self.labelVariableFile.configure(background="#d9d9d9")
+        self.labelVariableFile.configure(disabledforeground="#a3a3a3")
+        self.labelVariableFile.configure(foreground="#000000")
+        self.labelVariableFile.configure(text='''Variable File:''')
+        self.labelVariableFile.configure(width=172)
+
+        self.entryVariableFile = Entry(self.labelFrameVariableDescriptor)
+        self.entryVariableFile.place(relx=0.19, rely=0.17, relheight=0.21
+                                     , relwidth=0.64)
+        self.entryVariableFile.configure(background="white")
+        self.entryVariableFile.configure(disabledforeground="#a3a3a3")
+        self.entryVariableFile.configure(font="TkFixedFont")
+        self.entryVariableFile.configure(foreground="#000000")
+        self.entryVariableFile.configure(insertbackground="black")
+        self.entryVariableFile.configure(width=624)
+
+        self.buttonVariableFile = Button(self.labelFrameVariableDescriptor)
+        self.buttonVariableFile.place(relx=0.84, rely=0.17, height=23, width=146)
+
+        self.buttonVariableFile.configure(activebackground="#d9d9d9")
+        self.buttonVariableFile.configure(activeforeground="#000000")
+        self.buttonVariableFile.configure(background="#d9d9d9")
+        self.buttonVariableFile.configure(disabledforeground="#a3a3a3")
+        self.buttonVariableFile.configure(foreground="#000000")
+        self.buttonVariableFile.configure(highlightbackground="#d9d9d9")
+        self.buttonVariableFile.configure(highlightcolor="black")
+        self.buttonVariableFile.configure(pady="0")
+        self.buttonVariableFile.configure(text='''Choose File...''')
+        self.buttonVariableFile.configure(width=146)
+
+        self.labelValuesFile = Label(self.labelFrameVariableDescriptor)
+        self.labelValuesFile.place(relx=0.01, rely=0.43, height=26, width=172)
+        self.labelValuesFile.configure(background="#d9d9d9")
+        self.labelValuesFile.configure(disabledforeground="#a3a3a3")
+        self.labelValuesFile.configure(foreground="#000000")
+        self.labelValuesFile.configure(text='''Values File:''')
+        self.labelValuesFile.configure(width=172)
+
+        self.entryValuesFile = Entry(self.labelFrameVariableDescriptor)
+        self.entryValuesFile.place(relx=0.19, rely=0.43, relheight=0.21
+                                   , relwidth=0.64)
+        self.entryValuesFile.configure(background="white")
+        self.entryValuesFile.configure(disabledforeground="#a3a3a3")
+        self.entryValuesFile.configure(font="TkFixedFont")
+        self.entryValuesFile.configure(foreground="#000000")
+        self.entryValuesFile.configure(insertbackground="black")
+        self.entryValuesFile.configure(width=624)
+
+        self.buttonValuesFile = Button(self.labelFrameVariableDescriptor)
+        self.buttonValuesFile.place(relx=0.84, rely=0.43, height=23, width=146)
+        self.buttonValuesFile.configure(activebackground="#d9d9d9")
+        self.buttonValuesFile.configure(activeforeground="#000000")
+        self.buttonValuesFile.configure(background="#d9d9d9")
+        self.buttonValuesFile.configure(disabledforeground="#a3a3a3")
+        self.buttonValuesFile.configure(foreground="#000000")
+        self.buttonValuesFile.configure(highlightbackground="#d9d9d9")
+        self.buttonValuesFile.configure(highlightcolor="black")
+        self.buttonValuesFile.configure(pady="0")
+        self.buttonValuesFile.configure(text='''Choose File...''')
+        self.buttonValuesFile.configure(width=146)
+
+        self.buttonStartVariableDescriptor = Button(self.labelFrameVariableDescriptor)
+        self.buttonStartVariableDescriptor.place(relx=0.84, rely=0.7, height=23
+                                                 , width=146)
+        self.buttonStartVariableDescriptor.configure(activebackground="#d9d9d9")
+        self.buttonStartVariableDescriptor.configure(activeforeground="#000000")
+        self.buttonStartVariableDescriptor.configure(background="#d9d9d9")
+        self.buttonStartVariableDescriptor.configure(disabledforeground="#a3a3a3")
+        self.buttonStartVariableDescriptor.configure(foreground="#000000")
+        self.buttonStartVariableDescriptor.configure(highlightbackground="#d9d9d9")
+        self.buttonStartVariableDescriptor.configure(highlightcolor="black")
+        self.buttonStartVariableDescriptor.configure(pady="0")
+        self.buttonStartVariableDescriptor.configure(text='''Start''')
+        self.buttonStartVariableDescriptor.configure(width=146)
+        '''
+        self.progressBarVariableDescriptor = ttk.Progressbar(self.labelFrameVariableDescriptor)
+        self.progressBarVariableDescriptor.place(relx=0.19, rely=0.7
+                                                 , relwidth=0.64, relheight=0.0, height=24)
+        self.progressBarVariableDescriptor.configure(length="620")
+        '''
+
+        self.labelFramePreprocessor = LabelFrame(self.Tabs_t2)
+        self.labelFramePreprocessor.place(relx=0.01, rely=0.2, relheight=0.19
+                                          , relwidth=1.11)
+        self.labelFramePreprocessor.configure(relief=GROOVE)
+        self.labelFramePreprocessor.configure(foreground="black")
+        self.labelFramePreprocessor.configure(text='''Preprocessor''')
+        self.labelFramePreprocessor.configure(background="#d9d9d9")
+        self.labelFramePreprocessor.configure(highlightbackground="#d9d9d9")
+        self.labelFramePreprocessor.configure(highlightcolor="black")
+        self.labelFramePreprocessor.configure(width=1110)
+
+        self.labelVariableDescriptor = Label(self.labelFramePreprocessor)
+        self.labelVariableDescriptor.place(relx=0.01, rely=0.17, height=26
+                                           , width=172)
+        self.labelVariableDescriptor.configure(activebackground="#f9f9f9")
+        self.labelVariableDescriptor.configure(activeforeground="black")
+        self.labelVariableDescriptor.configure(background="#d9d9d9")
+        self.labelVariableDescriptor.configure(disabledforeground="#a3a3a3")
+        self.labelVariableDescriptor.configure(foreground="#000000")
+        self.labelVariableDescriptor.configure(highlightbackground="#d9d9d9")
+        self.labelVariableDescriptor.configure(highlightcolor="black")
+        self.labelVariableDescriptor.configure(text='''Variable Descriptor:''')
+
+        self.buttonVariableDescriptor = Button(self.labelFramePreprocessor)
+        self.buttonVariableDescriptor.place(relx=0.74, rely=0.17, height=23
+                                            , width=146)
+        self.buttonVariableDescriptor.configure(activebackground="#d9d9d9")
+        self.buttonVariableDescriptor.configure(activeforeground="#000000")
+        self.buttonVariableDescriptor.configure(background="#d9d9d9")
+        self.buttonVariableDescriptor.configure(disabledforeground="#a3a3a3")
+        self.buttonVariableDescriptor.configure(foreground="#000000")
+        self.buttonVariableDescriptor.configure(highlightbackground="#d9d9d9")
+        self.buttonVariableDescriptor.configure(highlightcolor="black")
+        self.buttonVariableDescriptor.configure(pady="0")
+        self.buttonVariableDescriptor.configure(text='''Choose File...''')
+
+        self.labelRawDataset = Label(self.labelFramePreprocessor)
+        self.labelRawDataset.place(relx=0.01, rely=0.43, height=26, width=172)
+        self.labelRawDataset.configure(activebackground="#f9f9f9")
+        self.labelRawDataset.configure(activeforeground="black")
+        self.labelRawDataset.configure(background="#d9d9d9")
+        self.labelRawDataset.configure(disabledforeground="#a3a3a3")
+        self.labelRawDataset.configure(foreground="#000000")
+        self.labelRawDataset.configure(highlightbackground="#d9d9d9")
+        self.labelRawDataset.configure(highlightcolor="black")
+        self.labelRawDataset.configure(text='''Raw Dataset:''')
+
+        self.entryRawDataset = Entry(self.labelFramePreprocessor)
+        self.entryRawDataset.place(relx=0.17, rely=0.43, relheight=0.21
+                                   , relwidth=0.56)
+        self.entryRawDataset.configure(background="white")
+        self.entryRawDataset.configure(disabledforeground="#a3a3a3")
+        self.entryRawDataset.configure(font="TkFixedFont")
+        self.entryRawDataset.configure(foreground="#000000")
+        self.entryRawDataset.configure(highlightbackground="#d9d9d9")
+        self.entryRawDataset.configure(highlightcolor="black")
+        self.entryRawDataset.configure(insertbackground="black")
+        self.entryRawDataset.configure(selectbackground="#c4c4c4")
+        self.entryRawDataset.configure(selectforeground="black")
+
+        self.buttonRawDataset = Button(self.labelFramePreprocessor)
+        self.buttonRawDataset.place(relx=0.74, rely=0.43, height=23, width=146)
+        self.buttonRawDataset.configure(activebackground="#d9d9d9")
+        self.buttonRawDataset.configure(activeforeground="#000000")
+        self.buttonRawDataset.configure(background="#d9d9d9")
+        self.buttonRawDataset.configure(disabledforeground="#a3a3a3")
+        self.buttonRawDataset.configure(foreground="#000000")
+        self.buttonRawDataset.configure(highlightbackground="#d9d9d9")
+        self.buttonRawDataset.configure(highlightcolor="black")
+        self.buttonRawDataset.configure(pady="0")
+        self.buttonRawDataset.configure(text='''Choose File...''')
+
+        self.buttonStartPreprocessor = Button(self.labelFramePreprocessor)
+        self.buttonStartPreprocessor.place(relx=0.74, rely=0.7, height=23
+                                           , width=146)
+        self.buttonStartPreprocessor.configure(activebackground="#d9d9d9")
+        self.buttonStartPreprocessor.configure(activeforeground="#000000")
+        self.buttonStartPreprocessor.configure(background="#d9d9d9")
+        self.buttonStartPreprocessor.configure(disabledforeground="#a3a3a3")
+        self.buttonStartPreprocessor.configure(foreground="#000000")
+        self.buttonStartPreprocessor.configure(highlightbackground="#d9d9d9")
+        self.buttonStartPreprocessor.configure(highlightcolor="black")
+        self.buttonStartPreprocessor.configure(pady="0")
+        self.buttonStartPreprocessor.configure(text='''Start''')
+
+        '''
+        self.progressBarPreprocessor = ttk.Progressbar(self.labelFramePreprocessor)
+        self.progressBarPreprocessor.place(relx=0.17, rely=0.7, relwidth=0.56
+                                           , relheight=0.0, height=24)
+                                           '''
+
+        self.entryVarDescriptor = Entry(self.labelFramePreprocessor)
+        self.entryVarDescriptor.place(relx=0.17, rely=0.17, relheight=0.21, relwidth=0.56)
+        self.entryVarDescriptor.configure(background="white")
+        self.entryVarDescriptor.configure(disabledforeground="#a3a3a3")
+        self.entryVarDescriptor.configure(font="TkFixedFont")
+        self.entryVarDescriptor.configure(foreground="#000000")
+        self.entryVarDescriptor.configure(insertbackground="black")
+        self.entryVarDescriptor.configure(width=624)
 
     '''
     DEFINING BOUND COMMANDS
     '''
+    # ABOUT US
+    def showAbout(self):
+        strAbout = "OTOO Miner v4.0\n" \
+                   "by TE3D House\n" \
+                   "De La Salle University - Laguna"
+        tkMessageBox.showinfo("About", strAbout)
+
     # UPLOAD MODULE
     def setPopulation(self, evt):
         global populationDir
