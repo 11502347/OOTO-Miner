@@ -50,7 +50,8 @@ def destroy_OOTO_Miner():
 
 class OOTO_Miner:
 
-    
+
+
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -58,7 +59,7 @@ class OOTO_Miner:
         _fgcolor = '#000000'  # X11 color: 'black'
         _compcolor = '#d9d9d9' # X11 color: 'gray85'
         _ana1color = '#d9d9d9' # X11 color: 'gray85'
-        _ana2color = '#d9d9d9' # X11 color: 'gray85' 
+        _ana2color = '#d9d9d9' # X11 color: 'gray85'
         self.style = ttk.Style()
         if sys.platform == "win32":
             self.style.theme_use('winnative')
@@ -74,11 +75,8 @@ class OOTO_Miner:
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="black")
 
-
         self.menubar = Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
         top.configure(menu = self.menubar)
-
-
 
         self.buttonTest = Button(top)
         self.buttonTest.place(relx=0.51, rely=0.93, height=33, width=486)
@@ -92,18 +90,23 @@ class OOTO_Miner:
         self.buttonTest.configure(pady="0")
         self.buttonTest.configure(text='''Test''')
 
+        '''
+        CHANGES HERE!
+        '''
         strarrTestType = ["Chi-test","Z-score statistics of pooled proportions","Standard Error of Population"]
         self.comboBoxTestType = ttk.Combobox(top)
         self.comboBoxTestType.place(relx=0.01, rely=0.02, relheight=0.04
                 , relwidth=0.49)
         self.comboBoxTestType.configure(exportselection="0")
-        self.comboBoxTestType.configure(textvariable=Mother_support.combobox)
+        #self.comboBoxTestType.configure(textvariable=Mother_support.combobox)
         self.comboBoxTestType.configure(takefocus="")
         self.comboBoxTestType.configure(values=strarrTestType)
+        self.comboBoxTestType.configure(state="readonly")
         self.comboBoxTestType.current(0)
         global testType
         testType = self.comboBoxTestType.get()
-        #self.adjustViews('<<ComboboxSelected>>')
+
+        # self.adjustViews()
 
         ''' 
         self.buttonTestType = Button(top)
@@ -216,6 +219,7 @@ class OOTO_Miner:
         self.listAttributes.configure(width=454)
         self.listAttributes.configure(selectmode=MULTIPLE)
 
+        '''
         self.entryCriticalValue = Entry(self.labelFrameZTest)
         self.entryCriticalValue.place(relx=0.25, rely=0.05, relheight=0.04
                 , relwidth=0.72)
@@ -228,6 +232,21 @@ class OOTO_Miner:
         self.entryCriticalValue.configure(insertbackground="black")
         self.entryCriticalValue.configure(selectbackground="#c4c4c4")
         self.entryCriticalValue.configure(selectforeground="black")
+        '''
+
+        '''
+        CHANGES HERE!
+        '''
+        strarrCriticalValue = ["0.80", "0.90", "0.95", "0.98", "0.99"]
+        self.comboCriticalValue = ttk.Combobox(self.labelFrameZTest)
+        self.comboCriticalValue.place(relx=0.25, rely=0.05, relheight=0.04, relwidth=0.72)
+        self.comboCriticalValue.configure(exportselection="0")
+        self.comboCriticalValue.configure(takefocus="")
+        self.comboCriticalValue.configure(values=strarrCriticalValue)
+        self.comboCriticalValue.configure(state="readonly")
+        self.comboCriticalValue.current(0)
+        global criticalValue
+        criticalValue = self.comboCriticalValue.get()
 
         self.buttonGetFeat = Button(self.labelFrameZTest)
         self.buttonGetFeat.place(relx=0.65, rely=0.11, height=23, width=156)
@@ -242,6 +261,7 @@ class OOTO_Miner:
         self.buttonGetFeat.configure(text='''Enter Feature Code''')
         self.buttonGetFeat.configure(width=156)
 
+        '''
         self.Entry1 = Entry(self.labelFrameZTest)
         self.Entry1.place(relx=0.25, rely=0.11, relheight=0.04, relwidth=0.38)
         self.Entry1.configure(background="white")
@@ -250,10 +270,10 @@ class OOTO_Miner:
         self.Entry1.configure(foreground="#000000")
         self.Entry1.configure(insertbackground="black")
         self.Entry1.configure(width=184)
+        '''
 
         self.labelFrameGenerateSamples = LabelFrame(top)
-        self.labelFrameGenerateSamples.place(relx=0.01, rely=0.22, relheight=0.78
-                , relwidth=0.49)
+        self.labelFrameGenerateSamples.place(relx=0.01, rely=0.22, relheight=0.78, relwidth=0.49)
         self.labelFrameGenerateSamples.configure(relief=GROOVE)
         self.labelFrameGenerateSamples.configure(foreground="black")
         self.labelFrameGenerateSamples.configure(text='''Generate Samples''')
@@ -263,7 +283,7 @@ class OOTO_Miner:
         self.labelFrameGenerateSamples.configure(width=490)
 
         self.entrySample = Entry(self.labelFrameGenerateSamples)
-        self.entrySample.place(relx=0.02, rely=0.05, relheight=0.05
+        self.entrySample.place(relx=0.25, rely=0.05, relheight=0.05
                 , relwidth=0.46)
         self.entrySample.configure(background="white")
         self.entrySample.configure(disabledforeground="#a3a3a3")
@@ -275,7 +295,16 @@ class OOTO_Miner:
         self.entrySample.configure(selectbackground="#c4c4c4")
         self.entrySample.configure(selectforeground="black")
 
-        self.entryFocus = Entry(self.labelFrameGenerateSamples)
+        self.entryFocus = Entry(self.labelFrameZTest)
+        self.entryFocus.place(relx=0.25, rely=0.11, relheight=0.04, relwidth=0.38)
+        self.entryFocus.configure(background="white")
+        self.entryFocus.configure(disabledforeground="#a3a3a3")
+        self.entryFocus.configure(font="TkFixedFont")
+        self.entryFocus.configure(foreground="#000000")
+        self.entryFocus.configure(insertbackground="black")
+        self.entryFocus.configure(width=184)
+
+        '''
         self.entryFocus.place(relx=0.51, rely=0.05, relheight=0.05
                 , relwidth=0.46)
         self.entryFocus.configure(background="white")
@@ -287,9 +316,10 @@ class OOTO_Miner:
         self.entryFocus.configure(insertbackground="black")
         self.entryFocus.configure(selectbackground="#c4c4c4")
         self.entryFocus.configure(selectforeground="black")
+        '''
 
         self.buttonSample = Button(self.labelFrameGenerateSamples)
-        self.buttonSample.place(relx=0.02, rely=0.11, height=23, width=226)
+        self.buttonSample.place(relx=0.25, rely=0.11, height=23, width=226)
         self.buttonSample.configure(activebackground="#d9d9d9")
         self.buttonSample.configure(activeforeground="#000000")
         self.buttonSample.configure(background="#d9d9d9")
@@ -300,6 +330,7 @@ class OOTO_Miner:
         self.buttonSample.configure(pady="0")
         self.buttonSample.configure(text='''Enter Sample Feature''')
 
+        '''
         self.buttonFocus = Button(self.labelFrameGenerateSamples)
         self.buttonFocus.place(relx=0.51, rely=0.11, height=23, width=226)
         self.buttonFocus.configure(activebackground="#d9d9d9")
@@ -310,7 +341,8 @@ class OOTO_Miner:
         self.buttonFocus.configure(highlightbackground="#d9d9d9")
         self.buttonFocus.configure(highlightcolor="black")
         self.buttonFocus.configure(pady="0")
-        self.buttonFocus.configure(text='''Enter Focus Feature''')
+        self.buttonFocus.configure(text='Enter Focus Feature')
+        '''
 
         self.buttonShowA = Button(self.labelFrameGenerateSamples)
         self.buttonShowA.place(relx=0.02, rely=0.24, height=23, width=226)
@@ -408,13 +440,13 @@ class OOTO_Miner:
         BINDING ELEMENTS
         notes: bind the functions as objects ( ie. setPopulation not setPopulation() )
         <Button-1> On left click
-        <<ComboboxSelected>>
-        
+        <<ComboboxSelected>> On select in ComboBox
+        CHANGES HERE!
         '''
         print 'binding elements'
         self.buttonPopulation.bind('<Button-1>', self.setPopulation)
         self.buttonSample.bind('<Button-1>', self.setSample)
-        self.buttonFocus.bind('<Button-1>', self.setFocus)
+        # self.buttonFocus.bind('<Button-1>', self.setFocus)
         self.buttonShowA.bind('<Button-1>', self.setFeatA)
         self.buttonShowB.bind('<Button-1>', self.setFeatB)
         self.buttonSaveDatasets.bind('<Button-1>', self.saveDataset)
@@ -422,8 +454,9 @@ class OOTO_Miner:
         self.buttonTest.bind('<Button-1>', self.test)
 
         self.comboBoxTestType.bind('<<ComboboxSelected>>', self.setTest)
+        self.comboCriticalValue.bind('<<ComboboxSelected>>', self.getCriticalValue)
 
-    
+
 
     '''
     DEFINING BOUND COMMANDS
@@ -435,7 +468,8 @@ class OOTO_Miner:
         populationDir = askopenfilename(title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))
         self.entryPopulation.delete(0, END)
         self.entryPopulation.insert(0, populationDir)
-        
+        self.buttonPopulation.configure(state='normal')
+
 
     # SET FEATURES A
     def setFeatA(self, evt):
@@ -466,24 +500,27 @@ class OOTO_Miner:
         print 'Yo Sample', sampleCode
 
     # GET FEATURE CODE AND SET FOCUS
+    # THIS FUNCTION HAS BEEN MIGRATED TO getFeat
+    '''
     def setFocus(self, evt):
         # Here is how to get the value from entryFocus
         focusCode = self.entryFocus.get()
         print 'Yo Focus', focusCode
+    '''
 
     # GENERATE AND SAVE THE DATASETS BASED ON THE INPUT
     def saveDataset(self, evt):
         # Save dataset
         print 'SAVING YO'
 
-    # GET FEATURE CODE FOR Z TEST
+    # GET FEATURE CODE FOR Z TEST / SET FOCUS
     def getFeat(self, evt):
         # Here is how to get the value from Entry1
-        featCode = self.Entry1.get()
+        featCode = self.entryFocus.get()
         print 'Yo Feature', featCode
 
         #Concat code
-        strFeature = self.Entry1.get()
+        strFeature = self.entryFocus.get()
         strFeature += " : "
         #Concat question
         strFeature += "WHY WHY WHYYYYYYYYYYYY...delilah.."
@@ -506,15 +543,54 @@ class OOTO_Miner:
         global testType
         testType = self.comboBoxTestType.get()
         self.textTestType.destroy()
-        self.adjustViews(evt)
+        self.adjustViews()
 
     # DISABLE BUTTONS/ENTRIES BASED ON TEST SELECTED
-
-    def adjustViews(self, evt):
+    def adjustViews(self):
         print testType
-        #["Chi-test","Z-score statistics of pooled proportions","Standard Error of Population"]
+        # ["Chi-test","Z-score statistics of pooled proportions","Standard Error of Population"]
+        self.buttonGetFeat.configure(state='normal')
+        self.labelZCriticalValue.configure(state='normal')
+        self.labelFeature.configure(state='normal')
+        self.buttonGetFeat.configure(state='normal')
+        self.buttonSample.configure(state='normal')
+        self.comboCriticalValue.configure(state='readonly')
+        self.entryFocus.configure(state='normal')
+        self.entryFocus.delete(0, END)
         if testType == 'Chi-test':
-            self.buttonFocus.configure(state='disabled')
+            self.buttonGetFeat.configure(state='disabled')
+            self.labelZCriticalValue.configure(state='disabled')
+            self.labelFeature.configure(state='disabled')
+            self.buttonGetFeat.configure(state='disabled')
+            self.buttonSample.configure(state='disabled')
+            self.comboCriticalValue.configure(state='disabled')
+            self.entryFocus.configure(state='disabled')
+
+    '''
+    CHANGES HERE!
+    '''
+    def getCriticalValue(self, evt):
+        global criticalValue
+        global Za
+        criticalValue = self.comboCriticalValue.get()
+        if criticalValue == "0.80":
+            print 1.27
+            Za = 1.27
+        elif criticalValue == "0.90":
+            print 1.645
+            Za = 1.645
+        elif criticalValue == "0.95":
+            print 1.645
+            Za = 1.96
+        elif criticalValue == "0.98":
+            print 2.33
+            Za = 2.33
+        elif criticalValue == "0.99":
+            print 2.58
+            Za = 2.58
+        else:
+            print -1
+            Za = -1
 
 
 if __name__ == '__main__':
