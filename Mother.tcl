@@ -74,6 +74,7 @@ proc vTclWindow.top37 {base} {
     vTcl::widgets::core::toplevel::createCmd $top -class Toplevel \
         -menu "$top.m38" -background {#d9d9d9} -highlightbackground {#d9d9d9} \
         -highlightcolor black 
+    wm withdraw $top
     wm focusmodel $top passive
     wm geometry $top 1000x600+522+139
     update
@@ -84,7 +85,6 @@ proc vTclWindow.top37 {base} {
     wm minsize $top 148 1
     wm overrideredirect $top 0
     wm resizable $top 0 0
-    wm deiconify $top
     wm title $top "OOTO Miner"
     vTcl:DefineAlias "$top" "Toplevel1" vTcl:Toplevel:WidgetProc "" 1
     menu $top.m38 \
@@ -155,7 +155,9 @@ proc vTclWindow.top37 {base} {
     vTcl:DefineAlias "$site_3_0.cpd79" "listAttributes" vTcl:WidgetProc "Toplevel1" 1
     entry $site_3_0.ent39 \
         -background white -disabledforeground {#a3a3a3} -font TkFixedFont \
-        -foreground {#000000} -insertbackground black 
+        -foreground {#000000} -highlightbackground {#d9d9d9} \
+        -highlightcolor black -insertbackground black \
+        -selectbackground {#c4c4c4} -selectforeground black 
     vTcl:DefineAlias "$site_3_0.ent39" "entryCriticalValue" vTcl:WidgetProc "Toplevel1" 1
     place $site_3_0.cpd74 \
         -in $site_3_0 -x 10 -y 10 -width 108 -height 26 -anchor nw \
@@ -238,11 +240,15 @@ proc vTclWindow.top37 {base} {
     vTcl:DefineAlias "$site_3_0.cpd94" "buttonSaveDatasets" vTcl:WidgetProc "Toplevel1" 1
     entry $site_3_0.ent37 \
         -background white -disabledforeground {#a3a3a3} -font TkFixedFont \
-        -foreground {#000000} -insertbackground black 
+        -foreground {#000000} -highlightbackground {#d9d9d9} \
+        -highlightcolor black -insertbackground black \
+        -selectbackground {#c4c4c4} -selectforeground black 
     vTcl:DefineAlias "$site_3_0.ent37" "entryFeatA" vTcl:WidgetProc "Toplevel1" 1
     entry $site_3_0.ent38 \
         -background white -disabledforeground {#a3a3a3} -font TkFixedFont \
-        -foreground {#000000} -insertbackground black 
+        -foreground {#000000} -highlightbackground {#d9d9d9} \
+        -highlightcolor black -insertbackground black \
+        -selectbackground {#c4c4c4} -selectforeground black 
     vTcl:DefineAlias "$site_3_0.ent38" "entryFeatB" vTcl:WidgetProc "Toplevel1" 1
     place $site_3_0.cpd82 \
         -in $site_3_0 -x 10 -y 0 -width 224 -relwidth 0 -height 24 \

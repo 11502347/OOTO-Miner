@@ -98,7 +98,8 @@ proc vTclWindow.top37 {base} {
         -highlightcolor black -pady 0 -text Test 
     vTcl:DefineAlias "$top.but39" "buttonTest" vTcl:WidgetProc "Toplevel1" 1
     ttk::combobox $top.tCo46 \
-        -textvariable combobox -foreground {} -background {} -takefocus {} 
+        -exportselection 0 -textvariable combobox -foreground {} \
+        -background {} -takefocus {} 
     vTcl:DefineAlias "$top.tCo46" "comboBoxTestType" vTcl:WidgetProc "Toplevel1" 1
     button $top.but47 \
         -activebackground {#d9d9d9} -activeforeground {#000000} \
@@ -130,7 +131,8 @@ proc vTclWindow.top37 {base} {
         -highlightcolor black -text {Z-Critical Value} 
     vTcl:DefineAlias "$site_3_0.cpd74" "labelZCriticalValue" vTcl:WidgetProc "Toplevel1" 1
     ttk::combobox $site_3_0.cpd75 \
-        -textvariable combobox -foreground {} -background {} -takefocus {} 
+        -exportselection 0 -textvariable combobox -foreground {} \
+        -background {} -takefocus {} 
     vTcl:DefineAlias "$site_3_0.cpd75" "comboBoxCriticalValue" vTcl:WidgetProc "Toplevel1" 1
     label $site_3_0.cpd77 \
         -activebackground {#f9f9f9} -activeforeground black \
@@ -139,18 +141,19 @@ proc vTclWindow.top37 {base} {
         -highlightcolor black -text Feature 
     vTcl:DefineAlias "$site_3_0.cpd77" "labelFeature" vTcl:WidgetProc "Toplevel1" 1
     text $site_3_0.cpd78 \
-        -background white -font TkTextFont -foreground black -height 54 \
-        -highlightbackground {#d9d9d9} -highlightcolor black \
-        -insertbackground black -selectbackground {#c4c4c4} \
-        -selectforeground black -width 454 -wrap word 
+        -background white -exportselection 0 -font TkTextFont \
+        -foreground black -height 54 -highlightbackground {#d9d9d9} \
+        -highlightcolor black -insertbackground black \
+        -selectbackground {#c4c4c4} -selectforeground black -width 454 \
+        -wrap word 
     .top37.lab73.cpd78 configure -font TkTextFont
     .top37.lab73.cpd78 insert end text
     vTcl:DefineAlias "$site_3_0.cpd78" "textFeature" vTcl:WidgetProc "Toplevel1" 1
     listbox $site_3_0.cpd79 \
-        -background white -disabledforeground {#a3a3a3} -font TkFixedFont \
-        -foreground {#000000} -height 398 -highlightbackground {#d9d9d9} \
-        -highlightcolor black -selectbackground {#c4c4c4} \
-        -selectforeground black -width 454 
+        -background white -disabledforeground {#a3a3a3} -exportselection 0 \
+        -font TkFixedFont -foreground {#000000} -height 398 \
+        -highlightbackground {#d9d9d9} -highlightcolor black \
+        -selectbackground {#c4c4c4} -selectforeground black -width 454 
     .top37.lab73.cpd79 configure -font TkFixedFont
     .top37.lab73.cpd79 insert end text
     vTcl:DefineAlias "$site_3_0.cpd79" "listAttributes" vTcl:WidgetProc "Toplevel1" 1
@@ -199,37 +202,31 @@ proc vTclWindow.top37 {base} {
         -foreground {#000000} -highlightbackground {#d9d9d9} \
         -highlightcolor black -pady 0 -text {Enter Focus Feature} 
     vTcl:DefineAlias "$site_3_0.cpd85" "buttonFocus" vTcl:WidgetProc "Toplevel1" 1
-    ttk::combobox $site_3_0.cpd86 \
-        -textvariable combobox -foreground {} -background {} -takefocus {} 
-    vTcl:DefineAlias "$site_3_0.cpd86" "comboBoxFeatA" vTcl:WidgetProc "Toplevel1" 1
-    ttk::combobox $site_3_0.cpd87 \
-        -textvariable combobox -foreground {} -background {} -takefocus {} 
-    vTcl:DefineAlias "$site_3_0.cpd87" "comboBoxFeatB" vTcl:WidgetProc "Toplevel1" 1
     button $site_3_0.cpd88 \
         -activebackground {#d9d9d9} -activeforeground {#000000} \
         -background {#d9d9d9} -disabledforeground {#a3a3a3} \
         -foreground {#000000} -highlightbackground {#d9d9d9} \
-        -highlightcolor black -pady 0 -text {temp Show Features A} 
-    vTcl:DefineAlias "$site_3_0.cpd88" "Button7" vTcl:WidgetProc "Toplevel1" 1
+        -highlightcolor black -pady 0 -text {Show Features A} 
+    vTcl:DefineAlias "$site_3_0.cpd88" "buttonShowA" vTcl:WidgetProc "Toplevel1" 1
     button $site_3_0.cpd90 \
         -activebackground {#d9d9d9} -activeforeground {#000000} \
         -background {#d9d9d9} -disabledforeground {#a3a3a3} \
         -foreground {#000000} -highlightbackground {#d9d9d9} \
-        -highlightcolor black -pady 0 -text {temp Show Features B} 
-    vTcl:DefineAlias "$site_3_0.cpd90" "Button10" vTcl:WidgetProc "Toplevel1" 1
+        -highlightcolor black -pady 0 -text {Show Features B} 
+    vTcl:DefineAlias "$site_3_0.cpd90" "buttonShowB" vTcl:WidgetProc "Toplevel1" 1
     listbox $site_3_0.cpd92 \
-        -background white -disabledforeground {#a3a3a3} -font TkFixedFont \
-        -foreground {#000000} -height 268 -highlightbackground {#d9d9d9} \
-        -highlightcolor black -selectbackground {#c4c4c4} \
-        -selectforeground black -width 224 
+        -background white -disabledforeground {#a3a3a3} -exportselection 0 \
+        -font TkFixedFont -foreground {#000000} -height 268 \
+        -highlightbackground {#d9d9d9} -highlightcolor black \
+        -selectbackground {#c4c4c4} -selectforeground black -width 224 
     .top37.cpd81.cpd92 configure -font TkFixedFont
     .top37.cpd81.cpd92 insert end text
     vTcl:DefineAlias "$site_3_0.cpd92" "listFeatA" vTcl:WidgetProc "Toplevel1" 1
     listbox $site_3_0.cpd93 \
-        -background white -disabledforeground {#a3a3a3} -font TkFixedFont \
-        -foreground {#000000} -height 268 -highlightbackground {#d9d9d9} \
-        -highlightcolor black -selectbackground {#c4c4c4} \
-        -selectforeground black -width 224 
+        -background white -disabledforeground {#a3a3a3} -exportselection 0 \
+        -font TkFixedFont -foreground {#000000} -height 268 \
+        -highlightbackground {#d9d9d9} -highlightcolor black \
+        -selectbackground {#c4c4c4} -selectforeground black -width 224 
     .top37.cpd81.cpd93 configure -font TkFixedFont
     .top37.cpd81.cpd93 insert end text
     vTcl:DefineAlias "$site_3_0.cpd93" "listFeatB" vTcl:WidgetProc "Toplevel1" 1
@@ -239,6 +236,14 @@ proc vTclWindow.top37 {base} {
         -foreground {#000000} -highlightbackground {#d9d9d9} \
         -highlightcolor black -pady 0 -text {Save Datasets} 
     vTcl:DefineAlias "$site_3_0.cpd94" "buttonSaveDatasets" vTcl:WidgetProc "Toplevel1" 1
+    entry $site_3_0.ent37 \
+        -background white -disabledforeground {#a3a3a3} -font TkFixedFont \
+        -foreground {#000000} -insertbackground black 
+    vTcl:DefineAlias "$site_3_0.ent37" "entryFeatA" vTcl:WidgetProc "Toplevel1" 1
+    entry $site_3_0.ent38 \
+        -background white -disabledforeground {#a3a3a3} -font TkFixedFont \
+        -foreground {#000000} -insertbackground black 
+    vTcl:DefineAlias "$site_3_0.ent38" "entryFeatB" vTcl:WidgetProc "Toplevel1" 1
     place $site_3_0.cpd82 \
         -in $site_3_0 -x 10 -y 0 -width 224 -relwidth 0 -height 24 \
         -relheight 0 -anchor nw -bordermode inside 
@@ -250,12 +255,6 @@ proc vTclWindow.top37 {base} {
         -relheight 0 -anchor nw -bordermode inside 
     place $site_3_0.cpd85 \
         -in $site_3_0 -x 250 -y 30 -width 226 -relwidth 0 -height 23 \
-        -relheight 0 -anchor nw -bordermode inside 
-    place $site_3_0.cpd86 \
-        -in $site_3_0 -x 10 -y 60 -width 227 -relwidth 0 -height 26 \
-        -relheight 0 -anchor nw -bordermode inside 
-    place $site_3_0.cpd87 \
-        -in $site_3_0 -x 250 -y 60 -width 227 -relwidth 0 -height 26 \
         -relheight 0 -anchor nw -bordermode inside 
     place $site_3_0.cpd88 \
         -in $site_3_0 -x 10 -y 90 -width 226 -relwidth 0 -height 23 \
@@ -272,6 +271,12 @@ proc vTclWindow.top37 {base} {
     place $site_3_0.cpd94 \
         -in $site_3_0 -x 10 -y 400 -width 466 -relwidth 0 -height 33 \
         -relheight 0 -anchor nw -bordermode inside 
+    place $site_3_0.ent37 \
+        -in $site_3_0 -x 10 -y 80 -width 224 -relwidth 0 -height 24 \
+        -relheight 0 -anchor nw -bordermode ignore 
+    place $site_3_0.ent38 \
+        -in $site_3_0 -x 250 -y 80 -width 224 -relwidth 0 -height 24 \
+        -relheight 0 -anchor nw -bordermode ignore 
     ###################
     # SETTING GEOMETRY
     ###################

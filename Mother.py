@@ -20,7 +20,6 @@ try:
 except ImportError:
     import tkinter.ttk as ttk
     py3 = 1
-# from Tkinter import tkFileDialog
 
 import Mother_support
 
@@ -78,8 +77,6 @@ def getData(code, selectedValues):
 
 class OOTO_Miner:
 
-
-    
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -87,7 +84,7 @@ class OOTO_Miner:
         _fgcolor = '#000000'  # X11 color: 'black'
         _compcolor = '#d9d9d9' # X11 color: 'gray85'
         _ana1color = '#d9d9d9' # X11 color: 'gray85'
-        _ana2color = '#d9d9d9' # X11 color: 'gray85' 
+        _ana2color = '#d9d9d9' # X11 color: 'gray85'
         self.style = ttk.Style()
         if sys.platform == "win32":
             self.style.theme_use('winnative')
@@ -103,13 +100,28 @@ class OOTO_Miner:
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="black")
 
+        self.Tabs = ttk.Notebook(top)
+        self.Tabs.place(relx=0.0, rely=0.0, relheight=1.0, relwidth=1.01)
+        self.Tabs.configure(width=604)
+        self.Tabs.configure(takefocus="")
+        self.Tabs_t1 = ttk.Frame(self.Tabs)
+        self.Tabs.add(self.Tabs_t1, padding=3)
+        self.Tabs.tab(0, text="Tests", underline="-1", )
+        self.Tabs_t2 = ttk.Frame(self.Tabs)
+        self.Tabs.add(self.Tabs_t2, padding=3)
+        self.Tabs.tab(1, text="Preprocessor", underline="-1", )
 
         self.menubar = Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
         top.configure(menu = self.menubar)
+        self.menubar.add_command(label="About", command=self.showAbout)
+        self.menubar.add_command(label="Help")
 
 
+        '''
+        TAB 1 - TESTS
+        '''
 
-        self.buttonTest = Button(top)
+        self.buttonTest = Button(self.Tabs_t1)
         self.buttonTest.place(relx=0.51, rely=0.93, height=33, width=486)
         self.buttonTest.configure(activebackground="#d9d9d9")
         self.buttonTest.configure(activeforeground="#000000")
@@ -121,19 +133,21 @@ class OOTO_Miner:
         self.buttonTest.configure(pady="0")
         self.buttonTest.configure(text='''Test''')
 
+        '''
+        CHANGES HERE!
+        '''
         strarrTestType = ["Chi-test","Z-score statistics of pooled proportions","Standard Error of Population"]
-        self.comboBoxTestType = ttk.Combobox(top)
+        self.comboBoxTestType = ttk.Combobox(self.Tabs_t1)
         self.comboBoxTestType.place(relx=0.01, rely=0.02, relheight=0.04
                 , relwidth=0.49)
         self.comboBoxTestType.configure(exportselection="0")
-        self.comboBoxTestType.configure(textvariable=Mother_support.combobox)
+        #self.comboBoxTestType.configure(textvariable=Mother_support.combobox)
         self.comboBoxTestType.configure(takefocus="")
         self.comboBoxTestType.configure(values=strarrTestType)
         self.comboBoxTestType.configure(state="readonly")
         self.comboBoxTestType.current(0)
         global testType
         testType = self.comboBoxTestType.get()
-        
         # self.adjustViews()
 
         ''' 
@@ -150,7 +164,7 @@ class OOTO_Miner:
         self.buttonTestType.configure(text=''Select Test'')
         '''
 
-        self.textTestType = Label(top)
+        self.textTestType = Label(self.Tabs_t1)
         self.textTestType.place(relx=0.01, rely=0.07, height=23, width=486)
         self.textTestType.configure(activebackground="#d9d9d9")
         self.textTestType.configure(activeforeground="#000000")
@@ -162,7 +176,7 @@ class OOTO_Miner:
         self.textTestType.configure(pady="0")
         self.textTestType.configure(text="WARNING: No Selected Test")
 
-        self.entryPopulation = Entry(top)
+        self.entryPopulation = Entry(self.Tabs_t1)
         self.entryPopulation.place(relx=0.01, rely=0.12, relheight=0.04
                 , relwidth=0.48)
         self.entryPopulation.configure(background="white")
@@ -175,7 +189,7 @@ class OOTO_Miner:
         self.entryPopulation.configure(selectbackground="#c4c4c4")
         self.entryPopulation.configure(selectforeground="black")
 
-        self.buttonPopulation = Button(top)
+        self.buttonPopulation = Button(self.Tabs_t1)
         self.buttonPopulation.place(relx=0.01, rely=0.17, height=23, width=486)
         self.buttonPopulation.configure(activebackground="#d9d9d9")
         self.buttonPopulation.configure(activeforeground="#000000")
@@ -187,7 +201,7 @@ class OOTO_Miner:
         self.buttonPopulation.configure(pady="0")
         self.buttonPopulation.configure(text='''Upload Population''')
 
-        self.labelFrameZTest = LabelFrame(top)
+        self.labelFrameZTest = LabelFrame(self.Tabs_t1)
         self.labelFrameZTest.place(relx=0.51, rely=0.0, relheight=0.93
                 , relwidth=0.48)
         self.labelFrameZTest.configure(relief=GROOVE)
@@ -247,6 +261,7 @@ class OOTO_Miner:
         self.listAttributes.configure(width=454)
         self.listAttributes.configure(selectmode=MULTIPLE)
 
+        '''
         self.entryCriticalValue = Entry(self.labelFrameZTest)
         self.entryCriticalValue.place(relx=0.25, rely=0.05, relheight=0.04
                 , relwidth=0.72)
@@ -259,6 +274,21 @@ class OOTO_Miner:
         self.entryCriticalValue.configure(insertbackground="black")
         self.entryCriticalValue.configure(selectbackground="#c4c4c4")
         self.entryCriticalValue.configure(selectforeground="black")
+        '''
+
+        '''
+        CHANGES HERE!
+        '''
+        strarrCriticalValue = ["0.80", "0.90", "0.95", "0.98", "0.99"]
+        self.comboCriticalValue = ttk.Combobox(self.labelFrameZTest)
+        self.comboCriticalValue.place(relx=0.25, rely=0.05, relheight=0.04, relwidth=0.72)
+        self.comboCriticalValue.configure(exportselection="0")
+        self.comboCriticalValue.configure(takefocus="")
+        self.comboCriticalValue.configure(values=strarrCriticalValue)
+        self.comboCriticalValue.configure(state="readonly")
+        self.comboCriticalValue.current(0)
+        global criticalValue
+        criticalValue = self.comboCriticalValue.get()
 
         self.buttonGetFeat = Button(self.labelFrameZTest)
         self.buttonGetFeat.place(relx=0.65, rely=0.11, height=23, width=156)
@@ -284,9 +314,8 @@ class OOTO_Miner:
         self.Entry1.configure(width=184)
         '''
 
-        self.labelFrameGenerateSamples = LabelFrame(top)
-        self.labelFrameGenerateSamples.place(relx=0.01, rely=0.22, relheight=0.78
-                , relwidth=0.49)
+        self.labelFrameGenerateSamples = LabelFrame(self.Tabs_t1)
+        self.labelFrameGenerateSamples.place(relx=0.01, rely=0.22, relheight=0.78, relwidth=0.49)
         self.labelFrameGenerateSamples.configure(relief=GROOVE)
         self.labelFrameGenerateSamples.configure(foreground="black")
         self.labelFrameGenerateSamples.configure(text='''Generate Samples''')
@@ -453,8 +482,8 @@ class OOTO_Miner:
         BINDING ELEMENTS
         notes: bind the functions as objects ( ie. setPopulation not setPopulation() )
         <Button-1> On left click
-        <<ComboboxSelected>>
-        
+        <<ComboboxSelected>> On select in ComboBox
+        CHANGES HERE!
         '''
         print 'binding elements'
         self.buttonPopulation.bind('<Button-1>', self.setPopulation)
@@ -467,6 +496,104 @@ class OOTO_Miner:
         self.buttonTest.bind('<Button-1>', self.test)
 
         self.comboBoxTestType.bind('<<ComboboxSelected>>', self.setTest)
+
+        self.comboCriticalValue.bind('<<ComboboxSelected>>', self.getCriticalValue)
+
+        '''
+        TAB 2 - PREPROCESSOR
+        '''
+
+        self.labelFrameVariableDescriptor = LabelFrame(self.Tabs_t2)
+        self.labelFrameVariableDescriptor.place(relx=0.01, rely=0.0
+                                                , relheight=0.19, relwidth=0.98)
+        self.labelFrameVariableDescriptor.configure(relief=GROOVE)
+        self.labelFrameVariableDescriptor.configure(foreground="black")
+        self.labelFrameVariableDescriptor.configure(text='''Variable Descriptor''')
+        self.labelFrameVariableDescriptor.configure(background="#d9d9d9")
+        self.labelFrameVariableDescriptor.configure(width=980)
+
+        self.labelVariableFile = Label(self.labelFrameVariableDescriptor)
+        self.labelVariableFile.place(relx=0.01, rely=0.17, height=26, width=172)
+        self.labelVariableFile.configure(background="#d9d9d9")
+        self.labelVariableFile.configure(disabledforeground="#a3a3a3")
+        self.labelVariableFile.configure(foreground="#000000")
+        self.labelVariableFile.configure(text='''Variable File:''')
+        self.labelVariableFile.configure(width=172)
+
+        self.entryVariableFile = Entry(self.labelFrameVariableDescriptor)
+        self.entryVariableFile.place(relx=0.19, rely=0.17, relheight=0.21
+                                     , relwidth=0.64)
+        self.entryVariableFile.configure(background="white")
+        self.entryVariableFile.configure(disabledforeground="#a3a3a3")
+        self.entryVariableFile.configure(font="TkFixedFont")
+        self.entryVariableFile.configure(foreground="#000000")
+        self.entryVariableFile.configure(insertbackground="black")
+        self.entryVariableFile.configure(width=624)
+
+        self.buttonVariableFile = Button(self.labelFrameVariableDescriptor)
+        self.buttonVariableFile.place(relx=0.84, rely=0.17, height=23, width=146)
+
+        self.buttonVariableFile.configure(activebackground="#d9d9d9")
+        self.buttonVariableFile.configure(activeforeground="#000000")
+        self.buttonVariableFile.configure(background="#d9d9d9")
+        self.buttonVariableFile.configure(disabledforeground="#a3a3a3")
+        self.buttonVariableFile.configure(foreground="#000000")
+        self.buttonVariableFile.configure(highlightbackground="#d9d9d9")
+        self.buttonVariableFile.configure(highlightcolor="black")
+        self.buttonVariableFile.configure(pady="0")
+        self.buttonVariableFile.configure(text='''Choose File...''')
+        self.buttonVariableFile.configure(width=146)
+
+        self.labelValuesFile = Label(self.labelFrameVariableDescriptor)
+        self.labelValuesFile.place(relx=0.01, rely=0.43, height=26, width=172)
+        self.labelValuesFile.configure(background="#d9d9d9")
+        self.labelValuesFile.configure(disabledforeground="#a3a3a3")
+        self.labelValuesFile.configure(foreground="#000000")
+        self.labelValuesFile.configure(text='''Values File:''')
+        self.labelValuesFile.configure(width=172)
+
+        self.entryValuesFile = Entry(self.labelFrameVariableDescriptor)
+        self.entryValuesFile.place(relx=0.19, rely=0.43, relheight=0.21
+                                   , relwidth=0.64)
+        self.entryValuesFile.configure(background="white")
+        self.entryValuesFile.configure(disabledforeground="#a3a3a3")
+        self.entryValuesFile.configure(font="TkFixedFont")
+        self.entryValuesFile.configure(foreground="#000000")
+        self.entryValuesFile.configure(insertbackground="black")
+        self.entryValuesFile.configure(width=624)
+
+        self.buttonValuesFile = Button(self.labelFrameVariableDescriptor)
+        self.buttonValuesFile.place(relx=0.84, rely=0.43, height=23, width=146)
+        self.buttonValuesFile.configure(activebackground="#d9d9d9")
+        self.buttonValuesFile.configure(activeforeground="#000000")
+        self.buttonValuesFile.configure(background="#d9d9d9")
+        self.buttonValuesFile.configure(disabledforeground="#a3a3a3")
+        self.buttonValuesFile.configure(foreground="#000000")
+        self.buttonValuesFile.configure(highlightbackground="#d9d9d9")
+        self.buttonValuesFile.configure(highlightcolor="black")
+        self.buttonValuesFile.configure(pady="0")
+        self.buttonValuesFile.configure(text='''Choose File...''')
+        self.buttonValuesFile.configure(width=146)
+
+        self.buttonStartVariableDescriptor = Button(self.labelFrameVariableDescriptor)
+        self.buttonStartVariableDescriptor.place(relx=0.84, rely=0.7, height=23
+                                                 , width=146)
+        self.buttonStartVariableDescriptor.configure(activebackground="#d9d9d9")
+        self.buttonStartVariableDescriptor.configure(activeforeground="#000000")
+        self.buttonStartVariableDescriptor.configure(background="#d9d9d9")
+        self.buttonStartVariableDescriptor.configure(disabledforeground="#a3a3a3")
+        self.buttonStartVariableDescriptor.configure(foreground="#000000")
+        self.buttonStartVariableDescriptor.configure(highlightbackground="#d9d9d9")
+        self.buttonStartVariableDescriptor.configure(highlightcolor="black")
+        self.buttonStartVariableDescriptor.configure(pady="0")
+        self.buttonStartVariableDescriptor.configure(text='''Start''')
+        self.buttonStartVariableDescriptor.configure(width=146)
+        '''
+        self.progressBarVariableDescriptor = ttk.Progressbar(self.labelFrameVariableDescriptor)
+        self.progressBarVariableDescriptor.place(relx=0.19, rely=0.7
+                                                 , relwidth=0.64, relheight=0.0, height=24)
+        self.progressBarVariableDescriptor.configure(length="620")
+        '''
         self.listFeatA.bind('<<ListboxSelect>>', self.selectValuesDatasetA)
         self.listFeatB.bind('<<ListboxSelect>>', self.selectValuesDatasetB)
 
@@ -485,19 +612,124 @@ class OOTO_Miner:
         self.populationDataset = []
         self.datasetA = {'Data':[]}
         self.datasetB = {'Data':[]}
-        
 
-    
+        self.labelFramePreprocessor = LabelFrame(self.Tabs_t2)
+        self.labelFramePreprocessor.place(relx=0.01, rely=0.2, relheight=0.19
+                                          , relwidth=1.11)
+        self.labelFramePreprocessor.configure(relief=GROOVE)
+        self.labelFramePreprocessor.configure(foreground="black")
+        self.labelFramePreprocessor.configure(text='''Preprocessor''')
+        self.labelFramePreprocessor.configure(background="#d9d9d9")
+        self.labelFramePreprocessor.configure(highlightbackground="#d9d9d9")
+        self.labelFramePreprocessor.configure(highlightcolor="black")
+        self.labelFramePreprocessor.configure(width=1110)
+
+        self.labelVariableDescriptor = Label(self.labelFramePreprocessor)
+        self.labelVariableDescriptor.place(relx=0.01, rely=0.17, height=26
+                                           , width=172)
+        self.labelVariableDescriptor.configure(activebackground="#f9f9f9")
+        self.labelVariableDescriptor.configure(activeforeground="black")
+        self.labelVariableDescriptor.configure(background="#d9d9d9")
+        self.labelVariableDescriptor.configure(disabledforeground="#a3a3a3")
+        self.labelVariableDescriptor.configure(foreground="#000000")
+        self.labelVariableDescriptor.configure(highlightbackground="#d9d9d9")
+        self.labelVariableDescriptor.configure(highlightcolor="black")
+        self.labelVariableDescriptor.configure(text='''Variable Descriptor:''')
+
+        self.buttonVariableDescriptor = Button(self.labelFramePreprocessor)
+        self.buttonVariableDescriptor.place(relx=0.74, rely=0.17, height=23
+                                            , width=146)
+        self.buttonVariableDescriptor.configure(activebackground="#d9d9d9")
+        self.buttonVariableDescriptor.configure(activeforeground="#000000")
+        self.buttonVariableDescriptor.configure(background="#d9d9d9")
+        self.buttonVariableDescriptor.configure(disabledforeground="#a3a3a3")
+        self.buttonVariableDescriptor.configure(foreground="#000000")
+        self.buttonVariableDescriptor.configure(highlightbackground="#d9d9d9")
+        self.buttonVariableDescriptor.configure(highlightcolor="black")
+        self.buttonVariableDescriptor.configure(pady="0")
+        self.buttonVariableDescriptor.configure(text='''Choose File...''')
+
+        self.labelRawDataset = Label(self.labelFramePreprocessor)
+        self.labelRawDataset.place(relx=0.01, rely=0.43, height=26, width=172)
+        self.labelRawDataset.configure(activebackground="#f9f9f9")
+        self.labelRawDataset.configure(activeforeground="black")
+        self.labelRawDataset.configure(background="#d9d9d9")
+        self.labelRawDataset.configure(disabledforeground="#a3a3a3")
+        self.labelRawDataset.configure(foreground="#000000")
+        self.labelRawDataset.configure(highlightbackground="#d9d9d9")
+        self.labelRawDataset.configure(highlightcolor="black")
+        self.labelRawDataset.configure(text='''Raw Dataset:''')
+
+        self.entryRawDataset = Entry(self.labelFramePreprocessor)
+        self.entryRawDataset.place(relx=0.17, rely=0.43, relheight=0.21
+                                   , relwidth=0.56)
+        self.entryRawDataset.configure(background="white")
+        self.entryRawDataset.configure(disabledforeground="#a3a3a3")
+        self.entryRawDataset.configure(font="TkFixedFont")
+        self.entryRawDataset.configure(foreground="#000000")
+        self.entryRawDataset.configure(highlightbackground="#d9d9d9")
+        self.entryRawDataset.configure(highlightcolor="black")
+        self.entryRawDataset.configure(insertbackground="black")
+        self.entryRawDataset.configure(selectbackground="#c4c4c4")
+        self.entryRawDataset.configure(selectforeground="black")
+
+        self.buttonRawDataset = Button(self.labelFramePreprocessor)
+        self.buttonRawDataset.place(relx=0.74, rely=0.43, height=23, width=146)
+        self.buttonRawDataset.configure(activebackground="#d9d9d9")
+        self.buttonRawDataset.configure(activeforeground="#000000")
+        self.buttonRawDataset.configure(background="#d9d9d9")
+        self.buttonRawDataset.configure(disabledforeground="#a3a3a3")
+        self.buttonRawDataset.configure(foreground="#000000")
+        self.buttonRawDataset.configure(highlightbackground="#d9d9d9")
+        self.buttonRawDataset.configure(highlightcolor="black")
+        self.buttonRawDataset.configure(pady="0")
+        self.buttonRawDataset.configure(text='''Choose File...''')
+
+        self.buttonStartPreprocessor = Button(self.labelFramePreprocessor)
+        self.buttonStartPreprocessor.place(relx=0.74, rely=0.7, height=23
+                                           , width=146)
+        self.buttonStartPreprocessor.configure(activebackground="#d9d9d9")
+        self.buttonStartPreprocessor.configure(activeforeground="#000000")
+        self.buttonStartPreprocessor.configure(background="#d9d9d9")
+        self.buttonStartPreprocessor.configure(disabledforeground="#a3a3a3")
+        self.buttonStartPreprocessor.configure(foreground="#000000")
+        self.buttonStartPreprocessor.configure(highlightbackground="#d9d9d9")
+        self.buttonStartPreprocessor.configure(highlightcolor="black")
+        self.buttonStartPreprocessor.configure(pady="0")
+        self.buttonStartPreprocessor.configure(text='''Start''')
+
+        '''
+        self.progressBarPreprocessor = ttk.Progressbar(self.labelFramePreprocessor)
+        self.progressBarPreprocessor.place(relx=0.17, rely=0.7, relwidth=0.56
+                                           , relheight=0.0, height=24)
+                                           '''
+
+        self.entryVarDescriptor = Entry(self.labelFramePreprocessor)
+        self.entryVarDescriptor.place(relx=0.17, rely=0.17, relheight=0.21, relwidth=0.56)
+        self.entryVarDescriptor.configure(background="white")
+        self.entryVarDescriptor.configure(disabledforeground="#a3a3a3")
+        self.entryVarDescriptor.configure(font="TkFixedFont")
+        self.entryVarDescriptor.configure(foreground="#000000")
+        self.entryVarDescriptor.configure(insertbackground="black")
+        self.entryVarDescriptor.configure(width=624)
 
     '''
     DEFINING BOUND COMMANDS
     '''
+    # ABOUT US
+    def showAbout(self):
+        strAbout = "OTOO Miner v4.0\n" \
+                   "by TE3D House\n" \
+                   "De La Salle University - Laguna"
+        tkMessageBox.showinfo("About", strAbout)
+
     # UPLOAD MODULE
     def setPopulation(self, evt):
         global populationDir
         populationDir = askopenfilename(title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))
         self.entryPopulation.delete(0, END)
         self.entryPopulation.insert(0, populationDir)
+        self.buttonPopulation.configure(state='normal')
         self.populationDataset = readCSVDict(populationDir)
     
     def selectValuesDatasetA(self, evt):
@@ -541,11 +773,6 @@ class OOTO_Miner:
         else:
             print "No dataset uploaded."
         print "Dataset B size: " + str(len(self.datasetB['Data']))
-
-
-        
-
-        
 
     # SET FEATURES A
     def setFeatA(self, evt):
@@ -662,12 +889,22 @@ class OOTO_Miner:
     def adjustViews(self):
         print testType
         # ["Chi-test","Z-score statistics of pooled proportions","Standard Error of Population"]
+        self.buttonGetFeat.configure(state='normal')
+        self.labelZCriticalValue.configure(state='normal')
+        self.labelFeature.configure(state='normal')
+        self.buttonGetFeat.configure(state='normal')
+        self.buttonSample.configure(state='normal')
+        self.comboCriticalValue.configure(state='readonly')
+        self.entryFocus.configure(state='normal')
+        self.entryFocus.delete(0, END)
         if testType == 'Chi-test':
             self.buttonGetFeat.configure(state='disabled')
             self.labelZCriticalValue.configure(state='disabled')
             self.labelFeature.configure(state='disabled')
             self.buttonGetFeat.configure(state='disabled')
             self.buttonSample.configure(state='disabled')
+            self.comboCriticalValue.configure(state='disabled')
+            self.entryFocus.configure(state='disabled')
             self.entrySample.configure(state='disabled')
             self.entryCriticalValue.configure(state='disabled')
             self.entryFocus.configure(state='disabled')
@@ -675,6 +912,33 @@ class OOTO_Miner:
             self.buttonSample.configure(state='disabled')
             self.entrySample.configure(state='disabled')
             self.entryCriticalValue.configure(state='disabled')
+    '''
+    CHANGES HERE!
+    '''
+    def getCriticalValue(self, evt):
+        global criticalValue
+        global Za
+        criticalValue = self.comboCriticalValue.get()
+        if criticalValue == "0.80":
+            print 1.27
+            Za = 1.27
+        elif criticalValue == "0.90":
+            print 1.645
+            Za = 1.645
+        elif criticalValue == "0.95":
+            print 1.645
+            Za = 1.96
+        elif criticalValue == "0.98":
+            print 2.33
+            Za = 2.33
+        elif criticalValue == "0.99":
+            print 2.58
+            Za = 2.58
+        else:
+            print -1
+            Za = -1
+            
+           
             
 
         #elif testType
@@ -690,7 +954,7 @@ class OOTO_Miner:
         self.buttonSample.configure(state = 'disabled')
         self.entryCriticalValue.configure(state = 'disabled')
         '''
-            
+
 
 
 if __name__ == '__main__':

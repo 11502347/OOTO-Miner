@@ -49,9 +49,6 @@ proc vTcl:project:info {} {
 #################################
 # GENERATED GUI PROCEDURES
 #
-    ttk::style configure Menu -background #d9d9d9
-    ttk::style configure Menu -foreground #000000
-    ttk::style configure Menu -font TkDefaultFont
     menu .pop43 \
         -activebackground {#f9f9f9} -activeforeground black \
         -background {#d9d9d9} -font {{Segoe UI} 9} -foreground black \
@@ -243,34 +240,34 @@ proc vTclWindow.top37 {base} {
         -highlightcolor black -pady 0 -text {Save Datasets} 
     vTcl:DefineAlias "$site_3_0.cpd94" "buttonSaveDatasets" vTcl:WidgetProc "Toplevel1" 1
     place $site_3_0.cpd82 \
-        -in $site_3_0 -x 10 -y 10 -width 224 -relwidth 0 -height 24 \
+        -in $site_3_0 -x 10 -y 0 -width 224 -relwidth 0 -height 24 \
         -relheight 0 -anchor nw -bordermode inside 
     place $site_3_0.cpd83 \
-        -in $site_3_0 -x 250 -y 10 -width 224 -relwidth 0 -height 24 \
+        -in $site_3_0 -x 250 -y 0 -width 224 -relwidth 0 -height 24 \
         -relheight 0 -anchor nw -bordermode inside 
     place $site_3_0.cpd84 \
-        -in $site_3_0 -x 10 -y 40 -width 226 -relwidth 0 -height 23 \
+        -in $site_3_0 -x 10 -y 30 -width 226 -relwidth 0 -height 23 \
         -relheight 0 -anchor nw -bordermode inside 
     place $site_3_0.cpd85 \
-        -in $site_3_0 -x 250 -y 40 -width 226 -relwidth 0 -height 23 \
+        -in $site_3_0 -x 250 -y 30 -width 226 -relwidth 0 -height 23 \
         -relheight 0 -anchor nw -bordermode inside 
     place $site_3_0.cpd86 \
-        -in $site_3_0 -x 10 -y 70 -width 227 -relwidth 0 -height 26 \
+        -in $site_3_0 -x 10 -y 60 -width 227 -relwidth 0 -height 26 \
         -relheight 0 -anchor nw -bordermode inside 
     place $site_3_0.cpd87 \
-        -in $site_3_0 -x 250 -y 70 -width 227 -relwidth 0 -height 26 \
+        -in $site_3_0 -x 250 -y 60 -width 227 -relwidth 0 -height 26 \
         -relheight 0 -anchor nw -bordermode inside 
     place $site_3_0.cpd88 \
-        -in $site_3_0 -x 10 -y 100 -width 226 -relwidth 0 -height 23 \
+        -in $site_3_0 -x 10 -y 90 -width 226 -relwidth 0 -height 23 \
         -relheight 0 -anchor nw -bordermode inside 
     place $site_3_0.cpd90 \
-        -in $site_3_0 -x 250 -y 100 -width 226 -relwidth 0 -height 23 \
+        -in $site_3_0 -x 250 -y 90 -width 226 -relwidth 0 -height 23 \
         -relheight 0 -anchor nw -bordermode inside 
     place $site_3_0.cpd92 \
-        -in $site_3_0 -x 10 -y 130 -width 224 -relwidth 0 -height 268 \
+        -in $site_3_0 -x 10 -y 120 -width 224 -relwidth 0 -height 268 \
         -relheight 0 -anchor nw -bordermode inside 
     place $site_3_0.cpd93 \
-        -in $site_3_0 -x 250 -y 130 -width 224 -relwidth 0 -height 268 \
+        -in $site_3_0 -x 250 -y 120 -width 224 -relwidth 0 -height 268 \
         -relheight 0 -anchor nw -bordermode inside 
     place $site_3_0.cpd94 \
         -in $site_3_0 -x 10 -y 400 -width 466 -relwidth 0 -height 33 \
