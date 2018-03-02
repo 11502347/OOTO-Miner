@@ -467,8 +467,8 @@ class OOTO_Miner:
         self.buttonTest.bind('<Button-1>', self.test)
 
         self.comboBoxTestType.bind('<<ComboboxSelected>>', self.setTest)
-        self.listFeatA.bind('<<ListboxSelect>>', self.selectValuesDataset)
-        self.listFeatB.bind('<<ListboxSelect>>', self.selectValuesDataset)
+        self.listFeatA.bind('<<ListboxSelect>>', self.selectValuesDatasetA)
+        self.listFeatB.bind('<<ListboxSelect>>', self.selectValuesDatasetB)
 
 
         '''
@@ -480,10 +480,11 @@ class OOTO_Miner:
         features = readFeatures(initVarDisc,"^")
         
         global selectedFocusFeature
-
+        global populationDir
+        populationDir = ""
         self.populationDataset = []
-        self.datasetA = {}
-        self.datasetB = {}
+        self.datasetA = {'Data':[]}
+        self.datasetB = {'Data':[]}
         
 
     
@@ -497,24 +498,52 @@ class OOTO_Miner:
         populationDir = askopenfilename(title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))
         self.entryPopulation.delete(0, END)
         self.entryPopulation.insert(0, populationDir)
-
         self.populationDataset = readCSVDict(populationDir)
     
     def selectValuesDatasetA(self, evt):
+        global populationDir
         listbox = evt.widget
         selectedValues = [listbox.get(i) for i in listbox.curselection()]
-        self.datasetA["Selected Responses"]=[]
+        self.datasetA['Selected Responses']=[]
         for sv in selectedValues:
-            print sv
-            
-        
-    
+            responseArr = sv.split(" - ")
+            for response in self.datasetA['Feature']['Responses']:
+                if response['Code'] == responseArr[0]:
+                    selected_response = copy.deepcopy(response)
+                    self.datasetA['Selected Responses'].append(selected_response)
+        self.datasetA['Data']=[]
+        if not (populationDir == ""):
+            self.populationDataset = readCSVDict(populationDir)
+            for record in self.populationDataset:
+                if any (response['Code'] == record[self.datasetA['Feature']['Code']] for response in self.datasetA['Selected Responses']):
+                    self.datasetA['Data'].append(record)
+        else:
+            print "No dataset uploaded."
+        print "Dataset A size: " + str(len(self.datasetA['Data']))
+
     def selectValuesDatasetB(self, evt):
+        global populationDir
         listbox = evt.widget
         selectedValues = [listbox.get(i) for i in listbox.curselection()]
-        self.datasetB["Selected Responses"]=[]
+        self.datasetB['Selected Responses']=[]
         for sv in selectedValues:
-            print sv
+            responseArr = sv.split(" - ")
+            for response in self.datasetB['Feature']['Responses']:
+                if response['Code'] == responseArr[0]:
+                    selected_response = copy.deepcopy(response)
+                    self.datasetB['Selected Responses'].append(selected_response)
+        self.datasetB['Data']=[]
+        if not (populationDir == ""):
+            self.populationDataset = readCSVDict(populationDir)
+            for record in self.populationDataset:
+                if any (response['Code'] == record[self.datasetB['Feature']['Code']] for response in self.datasetB['Selected Responses']):
+                    self.datasetB['Data'].append(record)
+        else:
+            print "No dataset uploaded."
+        print "Dataset B size: " + str(len(self.datasetB['Data']))
+
+
+        
 
         
 
@@ -526,7 +555,7 @@ class OOTO_Miner:
         #Get proper list of features from initial variable description
         for feature in features:
             if feature['Code'] == featACode:
-                self.datasetA = copy.deepcopy(feature)
+                self.datasetA['Feature'] = copy.deepcopy(feature)
                 for response in feature['Responses']:
                     tempResp = response['Code'] + " - " + response['Description']
                     arrTempItemsA.append(tempResp)
@@ -546,8 +575,8 @@ class OOTO_Miner:
         arrTempItemsB = []
         # Get proper list of features from initial variable description
         for feature in features:
-            self.datasetB = copy.deepcopy(feature)
             if feature['Code'] == featBCode:
+                self.datasetB['Feature'] = copy.deepcopy(feature)
                 for response in feature['Responses']:
                     tempResp = response['Code'] + " - " + response['Description']
                     arrTempItemsB.append(tempResp)
@@ -609,9 +638,19 @@ class OOTO_Miner:
     # DO TEST BASED ON INPUTS AND DATASETS
     def test(self, evt):
         datasets = []
-        print self.datasetA
-        print self.datasetB
+        print "Dataset A: "
+        print self.datasetA['Feature']
+        print self.datasetA['Selected Responses']
+        print "Dataset A size: " + str(len(self.datasetA['Data']))
+        print "Dataset B: "
+        print self.datasetB['Feature']
+        print self.datasetB['Selected Responses']
+        print "Dataset B size: " + str(len(self.datasetB['Data']))
+        datasets.append(self.datasetA)
+        datasets.append(self.datasetB)
 
+        
+            
     # SET THE TEST WHEN SELECTED IN COMBOBOX
     def setTest(self, evt):
         global testType
