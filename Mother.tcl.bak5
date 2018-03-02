@@ -49,9 +49,6 @@ proc vTcl:project:info {} {
 #################################
 # GENERATED GUI PROCEDURES
 #
-    ttk::style configure Menu -background #d9d9d9
-    ttk::style configure Menu -foreground #000000
-    ttk::style configure Menu -font TkDefaultFont
     menu .pop43 \
         -activebackground {#f9f9f9} -activeforeground black \
         -background {#d9d9d9} -font {{Segoe UI} 9} -foreground black \
@@ -75,10 +72,9 @@ proc vTclWindow.top37 {base} {
     # CREATING WIDGETS
     ###################
     vTcl::widgets::core::toplevel::createCmd $top -class Toplevel \
-        -menu "$top.m38" -background {#d9d9d9} -highlightbackground {#d9d9d9} \
-        -highlightcolor black 
+        -menu "$top.m38" -background {#d9d9d9} 
     wm focusmodel $top passive
-    wm geometry $top 1000x600+522+139
+    wm geometry $top 1000x600+475+140
     update
     # set in toplevel.wgt.
     global vTcl
@@ -102,45 +98,43 @@ proc vTclWindow.top37 {base} {
     vTcl:DefineAlias "$top.but39" "buttonTest" vTcl:WidgetProc "Toplevel1" 1
     ttk::combobox $top.tCo46 \
         -textvariable combobox -foreground {} -background {} -takefocus {} 
-    vTcl:DefineAlias "$top.tCo46" "comboBoxTestType" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$top.tCo46" "TCombobox1" vTcl:WidgetProc "Toplevel1" 1
     button $top.but47 \
         -activebackground {#d9d9d9} -activeforeground {#000000} \
         -background {#d9d9d9} -disabledforeground {#a3a3a3} \
         -foreground {#000000} -highlightbackground {#d9d9d9} \
         -highlightcolor black -pady 0 -text {Select Test} 
-    vTcl:DefineAlias "$top.but47" "buttonTestType" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$top.but47" "Button2" vTcl:WidgetProc "Toplevel1" 1
     entry $top.ent48 \
         -background white -disabledforeground {#a3a3a3} -font TkFixedFont \
-        -foreground {#000000} -highlightbackground {#d9d9d9} \
-        -highlightcolor black -insertbackground black \
-        -selectbackground {#c4c4c4} -selectforeground black 
-    vTcl:DefineAlias "$top.ent48" "entryPopulation" vTcl:WidgetProc "Toplevel1" 1
+        -foreground {#000000} -insertbackground black 
+    vTcl:DefineAlias "$top.ent48" "Entry1" vTcl:WidgetProc "Toplevel1" 1
     button $top.but50 \
         -activebackground {#d9d9d9} -activeforeground {#000000} \
         -background {#d9d9d9} -disabledforeground {#a3a3a3} \
         -foreground {#000000} -highlightbackground {#d9d9d9} \
         -highlightcolor black -pady 0 -text {Upload Population} 
-    vTcl:DefineAlias "$top.but50" "buttonPopulation" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$top.but50" "buttonFile1" vTcl:WidgetProc "Toplevel1" 1
     labelframe $top.lab73 \
         -foreground black -text {Z -Test} -background {#d9d9d9} -height 555 \
-        -highlightbackground {#d9d9d9} -highlightcolor black -width 480 
-    vTcl:DefineAlias "$top.lab73" "labelFrameZTest" vTcl:WidgetProc "Toplevel1" 1
+        -width 480 
+    vTcl:DefineAlias "$top.lab73" "Labelframe1" vTcl:WidgetProc "Toplevel1" 1
     set site_3_0 $top.lab73
     label $site_3_0.cpd74 \
         -activebackground {#f9f9f9} -activeforeground black \
         -background {#d9d9d9} -disabledforeground {#a3a3a3} \
         -foreground {#000000} -highlightbackground {#d9d9d9} \
         -highlightcolor black -text {Z-Critical Value} 
-    vTcl:DefineAlias "$site_3_0.cpd74" "labelZCriticalValue" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$site_3_0.cpd74" "Label2" vTcl:WidgetProc "Toplevel1" 1
     ttk::combobox $site_3_0.cpd75 \
         -textvariable combobox -foreground {} -background {} -takefocus {} 
-    vTcl:DefineAlias "$site_3_0.cpd75" "comboBoxCriticalValue" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$site_3_0.cpd75" "TCombobox2" vTcl:WidgetProc "Toplevel1" 1
     label $site_3_0.cpd77 \
         -activebackground {#f9f9f9} -activeforeground black \
         -background {#d9d9d9} -disabledforeground {#a3a3a3} \
         -foreground {#000000} -highlightbackground {#d9d9d9} \
         -highlightcolor black -text Feature 
-    vTcl:DefineAlias "$site_3_0.cpd77" "labelFeature" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$site_3_0.cpd77" "Label1" vTcl:WidgetProc "Toplevel1" 1
     text $site_3_0.cpd78 \
         -background white -font TkTextFont -foreground black -height 54 \
         -highlightbackground {#d9d9d9} -highlightcolor black \
@@ -148,7 +142,7 @@ proc vTclWindow.top37 {base} {
         -selectforeground black -width 454 -wrap word 
     .top37.lab73.cpd78 configure -font TkTextFont
     .top37.lab73.cpd78 insert end text
-    vTcl:DefineAlias "$site_3_0.cpd78" "textFeature" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$site_3_0.cpd78" "textFeature1" vTcl:WidgetProc "Toplevel1" 1
     listbox $site_3_0.cpd79 \
         -background white -disabledforeground {#a3a3a3} -font TkFixedFont \
         -foreground {#000000} -height 398 -highlightbackground {#d9d9d9} \
@@ -156,7 +150,7 @@ proc vTclWindow.top37 {base} {
         -selectforeground black -width 454 
     .top37.lab73.cpd79 configure -font TkFixedFont
     .top37.lab73.cpd79 insert end text
-    vTcl:DefineAlias "$site_3_0.cpd79" "listAttributes" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$site_3_0.cpd79" "listBoxZSEP1" vTcl:WidgetProc "Toplevel1" 1
     place $site_3_0.cpd74 \
         -in $site_3_0 -x 10 -y 10 -width 108 -height 26 -anchor nw \
         -bordermode inside 
@@ -176,38 +170,38 @@ proc vTclWindow.top37 {base} {
         -foreground black -text {Generate Samples} -background {#d9d9d9} \
         -height 465 -highlightbackground {#d9d9d9} -highlightcolor black \
         -width 490 
-    vTcl:DefineAlias "$top.cpd81" "labelFrameGenerateSamples" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$top.cpd81" "Labelframe2" vTcl:WidgetProc "Toplevel1" 1
     set site_3_0 $top.cpd81
     entry $site_3_0.cpd82 \
         -background white -disabledforeground {#a3a3a3} -font TkFixedFont \
         -foreground {#000000} -highlightbackground {#d9d9d9} \
         -highlightcolor black -insertbackground black \
         -selectbackground {#c4c4c4} -selectforeground black 
-    vTcl:DefineAlias "$site_3_0.cpd82" "entrySample" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$site_3_0.cpd82" "Entry2" vTcl:WidgetProc "Toplevel1" 1
     entry $site_3_0.cpd83 \
         -background white -disabledforeground {#a3a3a3} -font TkFixedFont \
         -foreground {#000000} -highlightbackground {#d9d9d9} \
         -highlightcolor black -insertbackground black \
         -selectbackground {#c4c4c4} -selectforeground black 
-    vTcl:DefineAlias "$site_3_0.cpd83" "entryFocus" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$site_3_0.cpd83" "Entry3" vTcl:WidgetProc "Toplevel1" 1
     button $site_3_0.cpd84 \
         -activebackground {#d9d9d9} -activeforeground {#000000} \
         -background {#d9d9d9} -disabledforeground {#a3a3a3} \
         -foreground {#000000} -highlightbackground {#d9d9d9} \
         -highlightcolor black -pady 0 -text {Enter Sample Feature} 
-    vTcl:DefineAlias "$site_3_0.cpd84" "buttonSample" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$site_3_0.cpd84" "Button5" vTcl:WidgetProc "Toplevel1" 1
     button $site_3_0.cpd85 \
         -activebackground {#d9d9d9} -activeforeground {#000000} \
         -background {#d9d9d9} -disabledforeground {#a3a3a3} \
         -foreground {#000000} -highlightbackground {#d9d9d9} \
         -highlightcolor black -pady 0 -text {Enter Focus Feature} 
-    vTcl:DefineAlias "$site_3_0.cpd85" "buttonFocus" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$site_3_0.cpd85" "Button6" vTcl:WidgetProc "Toplevel1" 1
     ttk::combobox $site_3_0.cpd86 \
         -textvariable combobox -foreground {} -background {} -takefocus {} 
-    vTcl:DefineAlias "$site_3_0.cpd86" "comboBoxFeatA" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$site_3_0.cpd86" "TCombobox3" vTcl:WidgetProc "Toplevel1" 1
     ttk::combobox $site_3_0.cpd87 \
         -textvariable combobox -foreground {} -background {} -takefocus {} 
-    vTcl:DefineAlias "$site_3_0.cpd87" "comboBoxFeatB" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$site_3_0.cpd87" "TCombobox4" vTcl:WidgetProc "Toplevel1" 1
     button $site_3_0.cpd88 \
         -activebackground {#d9d9d9} -activeforeground {#000000} \
         -background {#d9d9d9} -disabledforeground {#a3a3a3} \
@@ -227,7 +221,7 @@ proc vTclWindow.top37 {base} {
         -selectforeground black -width 224 
     .top37.cpd81.cpd92 configure -font TkFixedFont
     .top37.cpd81.cpd92 insert end text
-    vTcl:DefineAlias "$site_3_0.cpd92" "listFeatA" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$site_3_0.cpd92" "Listbox2" vTcl:WidgetProc "Toplevel1" 1
     listbox $site_3_0.cpd93 \
         -background white -disabledforeground {#a3a3a3} -font TkFixedFont \
         -foreground {#000000} -height 268 -highlightbackground {#d9d9d9} \
@@ -235,13 +229,13 @@ proc vTclWindow.top37 {base} {
         -selectforeground black -width 224 
     .top37.cpd81.cpd93 configure -font TkFixedFont
     .top37.cpd81.cpd93 insert end text
-    vTcl:DefineAlias "$site_3_0.cpd93" "listFeatB" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$site_3_0.cpd93" "Listbox3" vTcl:WidgetProc "Toplevel1" 1
     button $site_3_0.cpd94 \
         -activebackground {#d9d9d9} -activeforeground {#000000} \
         -background {#d9d9d9} -disabledforeground {#a3a3a3} \
         -foreground {#000000} -highlightbackground {#d9d9d9} \
         -highlightcolor black -pady 0 -text {Save Datasets} 
-    vTcl:DefineAlias "$site_3_0.cpd94" "buttonSaveDatasets" vTcl:WidgetProc "Toplevel1" 1
+    vTcl:DefineAlias "$site_3_0.cpd94" "Button9" vTcl:WidgetProc "Toplevel1" 1
     place $site_3_0.cpd82 \
         -in $site_3_0 -x 10 -y 10 -width 224 -relwidth 0 -height 24 \
         -relheight 0 -anchor nw -bordermode inside 

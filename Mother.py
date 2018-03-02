@@ -75,10 +75,26 @@ class OOTO_Miner:
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="black")
 
+        self.Tabs = ttk.Notebook(top)
+        self.Tabs.place(relx=0.0, rely=0.0, relheight=1.0, relwidth=1.01)
+        self.Tabs.configure(width=604)
+        self.Tabs.configure(takefocus="")
+        self.Tabs_t1 = ttk.Frame(self.Tabs)
+        self.Tabs.add(self.Tabs_t1, padding=3)
+        self.Tabs.tab(0, text="Tests", underline="-1", )
+        self.Tabs_t2 = ttk.Frame(self.Tabs)
+        self.Tabs.add(self.Tabs_t2, padding=3)
+        self.Tabs.tab(1, text="Preprocessor", underline="-1", )
+
+        '''
         self.menubar = Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
         top.configure(menu = self.menubar)
+        self.menubar.add_command(label="Preprocessor")
+        self.menubar.add_command(label="About")
+        self.menubar.add_command(label="Help")
+        '''
 
-        self.buttonTest = Button(top)
+        self.buttonTest = Button(self.Tabs_t1)
         self.buttonTest.place(relx=0.51, rely=0.93, height=33, width=486)
         self.buttonTest.configure(activebackground="#d9d9d9")
         self.buttonTest.configure(activeforeground="#000000")
@@ -94,7 +110,7 @@ class OOTO_Miner:
         CHANGES HERE!
         '''
         strarrTestType = ["Chi-test","Z-score statistics of pooled proportions","Standard Error of Population"]
-        self.comboBoxTestType = ttk.Combobox(top)
+        self.comboBoxTestType = ttk.Combobox(self.Tabs_t1)
         self.comboBoxTestType.place(relx=0.01, rely=0.02, relheight=0.04
                 , relwidth=0.49)
         self.comboBoxTestType.configure(exportselection="0")
@@ -122,7 +138,7 @@ class OOTO_Miner:
         self.buttonTestType.configure(text=''Select Test'')
         '''
 
-        self.textTestType = Label(top)
+        self.textTestType = Label(self.Tabs_t1)
         self.textTestType.place(relx=0.01, rely=0.07, height=23, width=486)
         self.textTestType.configure(activebackground="#d9d9d9")
         self.textTestType.configure(activeforeground="#000000")
@@ -134,7 +150,7 @@ class OOTO_Miner:
         self.textTestType.configure(pady="0")
         self.textTestType.configure(text="WARNING: No Selected Test")
 
-        self.entryPopulation = Entry(top)
+        self.entryPopulation = Entry(self.Tabs_t1)
         self.entryPopulation.place(relx=0.01, rely=0.12, relheight=0.04
                 , relwidth=0.48)
         self.entryPopulation.configure(background="white")
@@ -147,7 +163,7 @@ class OOTO_Miner:
         self.entryPopulation.configure(selectbackground="#c4c4c4")
         self.entryPopulation.configure(selectforeground="black")
 
-        self.buttonPopulation = Button(top)
+        self.buttonPopulation = Button(self.Tabs_t1)
         self.buttonPopulation.place(relx=0.01, rely=0.17, height=23, width=486)
         self.buttonPopulation.configure(activebackground="#d9d9d9")
         self.buttonPopulation.configure(activeforeground="#000000")
@@ -159,7 +175,7 @@ class OOTO_Miner:
         self.buttonPopulation.configure(pady="0")
         self.buttonPopulation.configure(text='''Upload Population''')
 
-        self.labelFrameZTest = LabelFrame(top)
+        self.labelFrameZTest = LabelFrame(self.Tabs_t1)
         self.labelFrameZTest.place(relx=0.51, rely=0.0, relheight=0.93
                 , relwidth=0.48)
         self.labelFrameZTest.configure(relief=GROOVE)
@@ -272,7 +288,7 @@ class OOTO_Miner:
         self.Entry1.configure(width=184)
         '''
 
-        self.labelFrameGenerateSamples = LabelFrame(top)
+        self.labelFrameGenerateSamples = LabelFrame(self.Tabs_t1)
         self.labelFrameGenerateSamples.place(relx=0.01, rely=0.22, relheight=0.78, relwidth=0.49)
         self.labelFrameGenerateSamples.configure(relief=GROOVE)
         self.labelFrameGenerateSamples.configure(foreground="black")
