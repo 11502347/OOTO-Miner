@@ -4,8 +4,10 @@
 # In conjunction with Tcl version 8.6
 #    Feb 26, 2018 12:01:25 PM
 import sys
+import csv
 import tkMessageBox
 from tkFileDialog import askopenfilename
+import copy
 
 try:
     from Tkinter import *
@@ -47,6 +49,32 @@ def destroy_OOTO_Miner():
     global w
     w.destroy()
     w = None
+
+def readFeatures(filename, varMark):
+    features = []
+    with open(filename) as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if(row[0]==varMark):
+                new_feature = {'Description':row[2], 'Code':row[1], 'Responses':[]}
+                features.append(new_feature)
+            else:
+                new_response = {'Group':row[0], 'Code':row[1], 'Description':row[2]}
+                new_feature['Responses'].append(new_response)
+    return features
+
+def readCSVDict(filename):
+    rows = csv.DictReader(open(filename))
+    return rows   
+
+def getData(code, selectedValues):
+    data = []
+    for record in self.populationDataset:
+        if(record[code] in selectedValues):
+            data.append(record)
+    
+    return data
+
 
 class OOTO_Miner:
 
@@ -439,6 +467,24 @@ class OOTO_Miner:
         self.buttonTest.bind('<Button-1>', self.test)
 
         self.comboBoxTestType.bind('<<ComboboxSelected>>', self.setTest)
+        self.listFeatA.bind('<<ListboxSelect>>', self.selectValuesDataset)
+        self.listFeatB.bind('<<ListboxSelect>>', self.selectValuesDataset)
+
+
+        '''
+        Reading features from Initial Variable Description
+
+        '''
+        initVarDisc = "InitialVarDesc.csv"
+        global features
+        features = readFeatures(initVarDisc,"^")
+        
+        global selectedFocusFeature
+
+        self.populationDataset = []
+        self.datasetA = {}
+        self.datasetB = {}
+        
 
     
 
@@ -448,31 +494,67 @@ class OOTO_Miner:
     # UPLOAD MODULE
     def setPopulation(self, evt):
         global populationDir
-        #populationDir = askopenfilename(initialdir = "/",title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))
         populationDir = askopenfilename(title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))
         self.entryPopulation.delete(0, END)
         self.entryPopulation.insert(0, populationDir)
+
+        self.populationDataset = readCSVDict(populationDir)
+    
+    def selectValuesDatasetA(self, evt):
+        listbox = evt.widget
+        selectedValues = [listbox.get(i) for i in listbox.curselection()]
+        self.datasetA["Selected Responses"]=[]
+        for sv in selectedValues:
+            print sv
+            
+        
+    
+    def selectValuesDatasetB(self, evt):
+        listbox = evt.widget
+        selectedValues = [listbox.get(i) for i in listbox.curselection()]
+        self.datasetB["Selected Responses"]=[]
+        for sv in selectedValues:
+            print sv
+
         
 
     # SET FEATURES A
     def setFeatA(self, evt):
         # Here is how to get the value from entryFeatA
         featACode = self.entryFeatA.get()
-        print 'Yo FeatA', featACode
+        arrTempItemsA = []
         #Get proper list of features from initial variable description
+        for feature in features:
+            if feature['Code'] == featACode:
+                self.datasetA = copy.deepcopy(feature)
+                for response in feature['Responses']:
+                    tempResp = response['Code'] + " - " + response['Description']
+                    arrTempItemsA.append(tempResp)
+                break
+
         self.listFeatA.delete(0, END)
-        arrTempItemsA = ['A1', 'B1', 'C1', 'D1']
+        
         for A in arrTempItemsA:
             self.listFeatA.insert(END, A)
+        
+
 
     # SET FEATURES B
     def setFeatB(self, evt):
         # Here is how to get the value from entryFeatB
         featBCode = self.entryFeatB.get()
-        print 'Yo FeatB', featBCode
+        arrTempItemsB = []
         # Get proper list of features from initial variable description
+        for feature in features:
+            self.datasetB = copy.deepcopy(feature)
+            if feature['Code'] == featBCode:
+                for response in feature['Responses']:
+                    tempResp = response['Code'] + " - " + response['Description']
+                    arrTempItemsB.append(tempResp)
+                break
+        
         self.listFeatB.delete(0, END)
-        arrTempItemsB = ['A2', 'B2', 'C2', 'D2']
+        
         for B in arrTempItemsB:
             self.listFeatB.insert(END, B)
 
@@ -498,28 +580,37 @@ class OOTO_Miner:
 
     # GET FEATURE CODE FOR Z TEST / SET FOCUS
     def getFeat(self, evt):
-        # Here is how to get the value from Entry1
+        # Here is how to get the value from focus feature
         featCode = self.entryFocus.get()
-        print 'Yo Feature', featCode
 
-        #Concat code
-        strFeature = self.entryFocus.get()
-        strFeature += " : "
-        #Concat question
-        strFeature += "WHY WHY WHYYYYYYYYYYYY...delilah.."
+        strFeature = "Feature code not found."
+        arrTempItemsC = []
+
+        for feature in features:
+            if feature['Code'] == featCode:
+                strFeature = feature['Code'] + " - " + feature['Description']
+                selectedFocusFeature = copy.deepcopy(feature)
+                for response in feature['Responses']:
+                    tempResp = response['Code'] + " - " + response['Description']
+                    arrTempItemsC.append(tempResp)
+                break
+
         self.textFeature.config(text=strFeature)
 
         #DELETE THEN SET VALUES TO THE ATTRIBUTE LIST
         self.listAttributes.delete(0, END)
-        arrTempItemsC = ['A3', 'B3', 'C3', 'D3']
+        
         for C in arrTempItemsC:
             self.listAttributes.insert(END, C)
 
+    
+
+    
     # DO TEST BASED ON INPUTS AND DATASETS
     def test(self, evt):
-        # Do test here
-        print 'Test'
-        print populationDir
+        datasets = []
+        print self.datasetA
+        print self.datasetB
 
     # SET THE TEST WHEN SELECTED IN COMBOBOX
     def setTest(self, evt):
@@ -538,7 +629,18 @@ class OOTO_Miner:
             self.labelFeature.configure(state='disabled')
             self.buttonGetFeat.configure(state='disabled')
             self.buttonSample.configure(state='disabled')
+            self.entrySample.configure(state='disabled')
             self.entryCriticalValue.configure(state='disabled')
+            self.entryFocus.configure(state='disabled')
+        elif testType == 'Z-score statistics of pooled proportions':
+            self.buttonSample.configure(state='disabled')
+            self.entrySample.configure(state='disabled')
+            self.entryCriticalValue.configure(state='disabled')
+            
+
+        #elif testType
+    
+    
 
 
         '''
