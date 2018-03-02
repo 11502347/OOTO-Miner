@@ -4,8 +4,10 @@
 # In conjunction with Tcl version 8.6
 #    Feb 26, 2018 12:01:25 PM
 import sys
+import csv
 import tkMessageBox
 from tkFileDialog import askopenfilename
+import copy
 
 try:
     from Tkinter import *
@@ -48,7 +50,34 @@ def destroy_OOTO_Miner():
     w.destroy()
     w = None
 
+def readFeatures(filename, varMark):
+    features = []
+    with open(filename) as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if(row[0]==varMark):
+                new_feature = {'Description':row[2], 'Code':row[1], 'Responses':[]}
+                features.append(new_feature)
+            else:
+                new_response = {'Group':row[0], 'Code':row[1], 'Description':row[2]}
+                new_feature['Responses'].append(new_response)
+    return features
+
+def readCSVDict(filename):
+    rows = csv.DictReader(open(filename))
+    return rows   
+
+def getData(code, selectedValues):
+    data = []
+    for record in self.populationDataset:
+        if(record[code] in selectedValues):
+            data.append(record)
+    
+    return data
+
+
 class OOTO_Miner:
+
 
     
     def __init__(self, top=None):
@@ -100,10 +129,12 @@ class OOTO_Miner:
         self.comboBoxTestType.configure(textvariable=Mother_support.combobox)
         self.comboBoxTestType.configure(takefocus="")
         self.comboBoxTestType.configure(values=strarrTestType)
+        self.comboBoxTestType.configure(state="readonly")
         self.comboBoxTestType.current(0)
         global testType
         testType = self.comboBoxTestType.get()
-        #self.adjustViews('<<ComboboxSelected>>')
+        
+        # self.adjustViews()
 
         ''' 
         self.buttonTestType = Button(top)
@@ -242,6 +273,7 @@ class OOTO_Miner:
         self.buttonGetFeat.configure(text='''Enter Feature Code''')
         self.buttonGetFeat.configure(width=156)
 
+        '''
         self.Entry1 = Entry(self.labelFrameZTest)
         self.Entry1.place(relx=0.25, rely=0.11, relheight=0.04, relwidth=0.38)
         self.Entry1.configure(background="white")
@@ -250,6 +282,7 @@ class OOTO_Miner:
         self.Entry1.configure(foreground="#000000")
         self.Entry1.configure(insertbackground="black")
         self.Entry1.configure(width=184)
+        '''
 
         self.labelFrameGenerateSamples = LabelFrame(top)
         self.labelFrameGenerateSamples.place(relx=0.01, rely=0.22, relheight=0.78
@@ -263,7 +296,7 @@ class OOTO_Miner:
         self.labelFrameGenerateSamples.configure(width=490)
 
         self.entrySample = Entry(self.labelFrameGenerateSamples)
-        self.entrySample.place(relx=0.02, rely=0.05, relheight=0.05
+        self.entrySample.place(relx=0.25, rely=0.05, relheight=0.05
                 , relwidth=0.46)
         self.entrySample.configure(background="white")
         self.entrySample.configure(disabledforeground="#a3a3a3")
@@ -275,7 +308,16 @@ class OOTO_Miner:
         self.entrySample.configure(selectbackground="#c4c4c4")
         self.entrySample.configure(selectforeground="black")
 
-        self.entryFocus = Entry(self.labelFrameGenerateSamples)
+        self.entryFocus = Entry(self.labelFrameZTest)
+        self.entryFocus.place(relx=0.25, rely=0.11, relheight=0.04, relwidth=0.38)
+        self.entryFocus.configure(background="white")
+        self.entryFocus.configure(disabledforeground="#a3a3a3")
+        self.entryFocus.configure(font="TkFixedFont")
+        self.entryFocus.configure(foreground="#000000")
+        self.entryFocus.configure(insertbackground="black")
+        self.entryFocus.configure(width=184)
+
+        '''
         self.entryFocus.place(relx=0.51, rely=0.05, relheight=0.05
                 , relwidth=0.46)
         self.entryFocus.configure(background="white")
@@ -287,9 +329,10 @@ class OOTO_Miner:
         self.entryFocus.configure(insertbackground="black")
         self.entryFocus.configure(selectbackground="#c4c4c4")
         self.entryFocus.configure(selectforeground="black")
+        '''
 
         self.buttonSample = Button(self.labelFrameGenerateSamples)
-        self.buttonSample.place(relx=0.02, rely=0.11, height=23, width=226)
+        self.buttonSample.place(relx=0.25, rely=0.11, height=23, width=226)
         self.buttonSample.configure(activebackground="#d9d9d9")
         self.buttonSample.configure(activeforeground="#000000")
         self.buttonSample.configure(background="#d9d9d9")
@@ -300,6 +343,7 @@ class OOTO_Miner:
         self.buttonSample.configure(pady="0")
         self.buttonSample.configure(text='''Enter Sample Feature''')
 
+        '''
         self.buttonFocus = Button(self.labelFrameGenerateSamples)
         self.buttonFocus.place(relx=0.51, rely=0.11, height=23, width=226)
         self.buttonFocus.configure(activebackground="#d9d9d9")
@@ -310,7 +354,8 @@ class OOTO_Miner:
         self.buttonFocus.configure(highlightbackground="#d9d9d9")
         self.buttonFocus.configure(highlightcolor="black")
         self.buttonFocus.configure(pady="0")
-        self.buttonFocus.configure(text='''Enter Focus Feature''')
+        self.buttonFocus.configure(text='Enter Focus Feature')
+        '''
 
         self.buttonShowA = Button(self.labelFrameGenerateSamples)
         self.buttonShowA.place(relx=0.02, rely=0.24, height=23, width=226)
@@ -414,7 +459,7 @@ class OOTO_Miner:
         print 'binding elements'
         self.buttonPopulation.bind('<Button-1>', self.setPopulation)
         self.buttonSample.bind('<Button-1>', self.setSample)
-        self.buttonFocus.bind('<Button-1>', self.setFocus)
+        # self.buttonFocus.bind('<Button-1>', self.setFocus)
         self.buttonShowA.bind('<Button-1>', self.setFeatA)
         self.buttonShowB.bind('<Button-1>', self.setFeatB)
         self.buttonSaveDatasets.bind('<Button-1>', self.saveDataset)
@@ -422,6 +467,25 @@ class OOTO_Miner:
         self.buttonTest.bind('<Button-1>', self.test)
 
         self.comboBoxTestType.bind('<<ComboboxSelected>>', self.setTest)
+        self.listFeatA.bind('<<ListboxSelect>>', self.selectValuesDatasetA)
+        self.listFeatB.bind('<<ListboxSelect>>', self.selectValuesDatasetB)
+
+
+        '''
+        Reading features from Initial Variable Description
+
+        '''
+        initVarDisc = "InitialVarDesc.csv"
+        global features
+        features = readFeatures(initVarDisc,"^")
+        
+        global selectedFocusFeature
+        global populationDir
+        populationDir = ""
+        self.populationDataset = []
+        self.datasetA = {'Data':[]}
+        self.datasetB = {'Data':[]}
+        
 
     
 
@@ -431,31 +495,95 @@ class OOTO_Miner:
     # UPLOAD MODULE
     def setPopulation(self, evt):
         global populationDir
-        #populationDir = askopenfilename(initialdir = "/",title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))
         populationDir = askopenfilename(title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))
         self.entryPopulation.delete(0, END)
         self.entryPopulation.insert(0, populationDir)
+        self.populationDataset = readCSVDict(populationDir)
+    
+    def selectValuesDatasetA(self, evt):
+        global populationDir
+        listbox = evt.widget
+        selectedValues = [listbox.get(i) for i in listbox.curselection()]
+        self.datasetA['Selected Responses']=[]
+        for sv in selectedValues:
+            responseArr = sv.split(" - ")
+            for response in self.datasetA['Feature']['Responses']:
+                if response['Code'] == responseArr[0]:
+                    selected_response = copy.deepcopy(response)
+                    self.datasetA['Selected Responses'].append(selected_response)
+        self.datasetA['Data']=[]
+        if not (populationDir == ""):
+            self.populationDataset = readCSVDict(populationDir)
+            for record in self.populationDataset:
+                if any (response['Code'] == record[self.datasetA['Feature']['Code']] for response in self.datasetA['Selected Responses']):
+                    self.datasetA['Data'].append(record)
+        else:
+            print "No dataset uploaded."
+        print "Dataset A size: " + str(len(self.datasetA['Data']))
+
+    def selectValuesDatasetB(self, evt):
+        global populationDir
+        listbox = evt.widget
+        selectedValues = [listbox.get(i) for i in listbox.curselection()]
+        self.datasetB['Selected Responses']=[]
+        for sv in selectedValues:
+            responseArr = sv.split(" - ")
+            for response in self.datasetB['Feature']['Responses']:
+                if response['Code'] == responseArr[0]:
+                    selected_response = copy.deepcopy(response)
+                    self.datasetB['Selected Responses'].append(selected_response)
+        self.datasetB['Data']=[]
+        if not (populationDir == ""):
+            self.populationDataset = readCSVDict(populationDir)
+            for record in self.populationDataset:
+                if any (response['Code'] == record[self.datasetB['Feature']['Code']] for response in self.datasetB['Selected Responses']):
+                    self.datasetB['Data'].append(record)
+        else:
+            print "No dataset uploaded."
+        print "Dataset B size: " + str(len(self.datasetB['Data']))
+
+
+        
+
         
 
     # SET FEATURES A
     def setFeatA(self, evt):
         # Here is how to get the value from entryFeatA
         featACode = self.entryFeatA.get()
-        print 'Yo FeatA', featACode
+        arrTempItemsA = []
         #Get proper list of features from initial variable description
+        for feature in features:
+            if feature['Code'] == featACode:
+                self.datasetA['Feature'] = copy.deepcopy(feature)
+                for response in feature['Responses']:
+                    tempResp = response['Code'] + " - " + response['Description']
+                    arrTempItemsA.append(tempResp)
+                break
+
         self.listFeatA.delete(0, END)
-        arrTempItemsA = ['A1', 'B1', 'C1', 'D1']
+        
         for A in arrTempItemsA:
             self.listFeatA.insert(END, A)
+        
+
 
     # SET FEATURES B
     def setFeatB(self, evt):
         # Here is how to get the value from entryFeatB
         featBCode = self.entryFeatB.get()
-        print 'Yo FeatB', featBCode
+        arrTempItemsB = []
         # Get proper list of features from initial variable description
+        for feature in features:
+            if feature['Code'] == featBCode:
+                self.datasetB['Feature'] = copy.deepcopy(feature)
+                for response in feature['Responses']:
+                    tempResp = response['Code'] + " - " + response['Description']
+                    arrTempItemsB.append(tempResp)
+                break
+        
         self.listFeatB.delete(0, END)
-        arrTempItemsB = ['A2', 'B2', 'C2', 'D2']
+        
         for B in arrTempItemsB:
             self.listFeatB.insert(END, B)
 
@@ -466,55 +594,103 @@ class OOTO_Miner:
         print 'Yo Sample', sampleCode
 
     # GET FEATURE CODE AND SET FOCUS
+    # THIS FUNCTION HAS BEEN MIGRATED TO getFeat
+    '''
     def setFocus(self, evt):
         # Here is how to get the value from entryFocus
         focusCode = self.entryFocus.get()
         print 'Yo Focus', focusCode
+    '''
 
     # GENERATE AND SAVE THE DATASETS BASED ON THE INPUT
     def saveDataset(self, evt):
         # Save dataset
         print 'SAVING YO'
 
-    # GET FEATURE CODE FOR Z TEST
+    # GET FEATURE CODE FOR Z TEST / SET FOCUS
     def getFeat(self, evt):
-        # Here is how to get the value from Entry1
-        featCode = self.Entry1.get()
-        print 'Yo Feature', featCode
+        # Here is how to get the value from focus feature
+        featCode = self.entryFocus.get()
 
-        #Concat code
-        strFeature = self.Entry1.get()
-        strFeature += " : "
-        #Concat question
-        strFeature += "WHY WHY WHYYYYYYYYYYYY...delilah.."
+        strFeature = "Feature code not found."
+        arrTempItemsC = []
+
+        for feature in features:
+            if feature['Code'] == featCode:
+                strFeature = feature['Code'] + " - " + feature['Description']
+                selectedFocusFeature = copy.deepcopy(feature)
+                for response in feature['Responses']:
+                    tempResp = response['Code'] + " - " + response['Description']
+                    arrTempItemsC.append(tempResp)
+                break
+
         self.textFeature.config(text=strFeature)
 
         #DELETE THEN SET VALUES TO THE ATTRIBUTE LIST
         self.listAttributes.delete(0, END)
-        arrTempItemsC = ['A3', 'B3', 'C3', 'D3']
+        
         for C in arrTempItemsC:
             self.listAttributes.insert(END, C)
 
+    
+
+    
     # DO TEST BASED ON INPUTS AND DATASETS
     def test(self, evt):
-        # Do test here
-        print 'Test'
-        print populationDir
+        datasets = []
+        print "Dataset A: "
+        print self.datasetA['Feature']
+        print self.datasetA['Selected Responses']
+        print "Dataset A size: " + str(len(self.datasetA['Data']))
+        print "Dataset B: "
+        print self.datasetB['Feature']
+        print self.datasetB['Selected Responses']
+        print "Dataset B size: " + str(len(self.datasetB['Data']))
+        datasets.append(self.datasetA)
+        datasets.append(self.datasetB)
 
+        
+            
     # SET THE TEST WHEN SELECTED IN COMBOBOX
     def setTest(self, evt):
         global testType
         testType = self.comboBoxTestType.get()
         self.textTestType.destroy()
-        self.adjustViews(evt)
+        self.adjustViews()
 
     # DISABLE BUTTONS/ENTRIES BASED ON TEST SELECTED
-
-    def adjustViews(self, evt):
+    def adjustViews(self):
         print testType
-        #["Chi-test","Z-score statistics of pooled proportions","Standard Error of Population"]
+        # ["Chi-test","Z-score statistics of pooled proportions","Standard Error of Population"]
         if testType == 'Chi-test':
-            self.buttonFocus.configure(state='disabled')
+            self.buttonGetFeat.configure(state='disabled')
+            self.labelZCriticalValue.configure(state='disabled')
+            self.labelFeature.configure(state='disabled')
+            self.buttonGetFeat.configure(state='disabled')
+            self.buttonSample.configure(state='disabled')
+            self.entrySample.configure(state='disabled')
+            self.entryCriticalValue.configure(state='disabled')
+            self.entryFocus.configure(state='disabled')
+        elif testType == 'Z-score statistics of pooled proportions':
+            self.buttonSample.configure(state='disabled')
+            self.entrySample.configure(state='disabled')
+            self.entryCriticalValue.configure(state='disabled')
+            
+
+        #elif testType
+    
+    
+
+
+        '''
+        self.buttonGetFeat.configure(state='disabled')
+        self.labelZCriticalValue.configure(state='disabled')
+        self.labelFeature.configure(state='disabled')
+        self.buttonGetFeat.configure(state='disabled')
+        self.buttonSample.configure(state = 'disabled')
+        self.entryCriticalValue.configure(state = 'disabled')
+        '''
+            
 
 
 if __name__ == '__main__':

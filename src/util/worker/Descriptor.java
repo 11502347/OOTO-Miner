@@ -33,7 +33,7 @@ public class Descriptor extends SwingWorker<Void, Void>{
 	    SwingUpdater.appendJTextAreaText(mainFrame.getTextAreaDescriptorStatus(), "PROCESS: Reading features from files. . .\n");
 		//ip.readQuestions(varQuestions, valQuestions, varFilePath, valFilePath);
 	    
-		ip.readQuestions(varQuestions, valQuestions, varFilePath, valFilePath, true);//Read from variable and values files
+		ip.readQuestions(varQuestions, valQuestions, varFilePath, valFilePath);//Read from variable and values files
         
         QuestionMerger qm = new QuestionMerger();
 	    SwingUpdater.appendJTextAreaText(mainFrame.getTextAreaDescriptorStatus(), "PROCESS: Merging descriptions of variables and values. . .\n");
