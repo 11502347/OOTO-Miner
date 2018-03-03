@@ -48,14 +48,17 @@ public class Preprocessor extends SwingWorker<Void, Integer>{
 		SwingUpdater.appendJTextAreaText(mainFrame.getTextAreaPreprocessorStatus(), "PROCESS: Reading input files. . .\n");
 		questionList = PreprocessorIO.readQuestions(varDesFilePath, "^");
 		
+		System.out.println("Number of features: " + questionList.size());
+		
 		
 		ArrayList<Entry> oldEntries = cp.readCSV(header, columns, rawFilePath, 1);
 		SwingUpdater.appendJTextAreaText(mainFrame.getTextAreaPreprocessorStatus(), "PROCESS: Converting values in dataset. . .");
 		
-		
+		System.out.println("Number of old entries: " + oldEntries.size());
 		tempStrings = new ArrayList<>();
 		
 		newQuestions = conv.convertQuestions(columns, questionList, tempStrings);
+		System.out.println("Number of new questions: " + newQuestions.size());
 		
 		for(Feature f : newQuestions)
 		{
