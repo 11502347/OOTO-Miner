@@ -471,7 +471,7 @@ def getVariableList(filename, varMarker): #Reads the question
 	with open(filename) as csvfile:
 	    readCSV = csv.reader(csvfile, delimiter=',')
 	    for row in readCSV:
-
+                print row
 	    	if( row[0] == varMarker):
 	    		variables[row[1]]= [row[2]]
 	    		lastVar = row[1]    	

@@ -275,6 +275,7 @@ class OOTO_Miner:
         self.entryCriticalValue.configure(selectbackground="#c4c4c4")
         self.entryCriticalValue.configure(selectforeground="black")
         '''
+        
 
         '''
         CHANGES HERE!
@@ -439,7 +440,7 @@ class OOTO_Miner:
         self.listFeatB.configure(selectforeground="black")
         self.listFeatB.configure(width=224)
         self.listFeatB.configure(selectmode=MULTIPLE)
-
+        
         self.buttonSaveDatasets = Button(self.labelFrameGenerateSamples)
         self.buttonSaveDatasets.place(relx=0.02, rely=0.91, height=33, width=466)
 
@@ -451,7 +452,8 @@ class OOTO_Miner:
         self.buttonSaveDatasets.configure(highlightbackground="#d9d9d9")
         self.buttonSaveDatasets.configure(highlightcolor="black")
         self.buttonSaveDatasets.configure(pady="0")
-        self.buttonSaveDatasets.configure(text='''Save Datasets''')
+        self.buttonSaveDatasets.configure(text='Save Datasets')
+        
 
         self.entryFeatA = Entry(self.labelFrameGenerateSamples)
         self.entryFeatA.place(relx=0.02, rely=0.17, relheight=0.05
@@ -836,6 +838,8 @@ class OOTO_Miner:
 
     # GET FEATURE CODE FOR Z TEST / SET FOCUS
     def getFeat(self, evt):
+        global selectedFocusFeature
+
         # Here is how to get the value from focus feature
         featCode = self.entryFocus.get()
 
@@ -894,9 +898,14 @@ class OOTO_Miner:
         self.labelFeature.configure(state='normal')
         self.buttonGetFeat.configure(state='normal')
         self.buttonSample.configure(state='normal')
+        self.entrySample.configure(state='normal')
         self.comboCriticalValue.configure(state='readonly')
         self.entryFocus.configure(state='normal')
         self.entryFocus.delete(0, END)
+        self.entryFeatA.configure(state='normal')
+        self.entryFeatB.configure(state='normal')
+        self.buttonShowA.configure(state='normal')
+        self.buttonShowB.configure(state='normal')
         if testType == 'Chi-test':
             self.buttonGetFeat.configure(state='disabled')
             self.labelZCriticalValue.configure(state='disabled')
@@ -912,6 +921,13 @@ class OOTO_Miner:
             self.buttonSample.configure(state='disabled')
             self.entrySample.configure(state='disabled')
             self.entryCriticalValue.configure(state='disabled')
+            self.comboCriticalValue.configure(state='disabled')
+        elif testType == 'Standard Error of Population':
+            self.comboCriticalValue.configure(state='readonly')
+            self.entryFeatA.configure(state='disabled')
+            self.entryFeatB.configure(state='disabled')
+            self.buttonShowA.configure(state='disabled')
+            self.buttonShowB.configure(state='disabled')
     '''
     CHANGES HERE!
     '''
