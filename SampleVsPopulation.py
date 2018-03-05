@@ -149,7 +149,7 @@ Call this method to initiate the Sample vs Population
 '''
 def sampleVsPopulation(popDatasetPath, sampleFeature, selectedFeature, allValues, selectedValues, zCriticalValue):
     delimiter = ':'
-
+    
     records = readCSVDict(popDatasetPath) #Read records from the population dataset file
 
     samples = []
@@ -157,7 +157,10 @@ def sampleVsPopulation(popDatasetPath, sampleFeature, selectedFeature, allValues
     makeSamples(records, sampleFeature,samples)#Make the samples from the population raw dataset
 
     records = readCSVDict(popDatasetPath) #Read the records again because for some reason they disappear after making the sample groups
-
+    print "All values: " + allValues
+    print "Selected values: " + selectedValues
+    allValues = allValues.split(":")
+    selectedValues = selectedValues.split(":")
     getSampleTotalsAndProportions(records, samples, sampleFeature, selectedFeature, allValues, selectedValues)#Calculate n, f, and p of the samples
 
     records = readCSVDict(popDatasetPath) #Read the records again because for some reason they disappear after making the sample groups
@@ -182,7 +185,7 @@ def sampleVsPopulation(popDatasetPath, sampleFeature, selectedFeature, allValues
     saveFile = 'Sample vs Population_'+sampleFeature+'_'+selectedFeature+'.csv'
     makeResults(header, samples, population, zCriticalValue, saveFile)
 
-    return population, samples
+    return saveFile
 
 
 

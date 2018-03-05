@@ -8,6 +8,8 @@ import csv
 import tkMessageBox
 from tkFileDialog import askopenfilename
 import copy
+import SampleVsPopulation as svp
+import SampleVsSample as svs
 
 try:
     from Tkinter import *
@@ -65,6 +67,13 @@ def readFeatures(filename, varMark):
 def readCSVDict(filename):
     rows = csv.DictReader(open(filename))
     return rows   
+
+def writeCSVDict(filename, dataset):
+    f = open(filename,'wb')
+    for i in range(0, len(dataset)):
+        w = csv.DictWriter(f,dataset[i].keys())
+        w.writerow(dataset[i])
+    f.close()
 
 def getData(code, selectedValues):
     data = []
@@ -145,9 +154,6 @@ class OOTO_Miner:
         self.comboBoxTestType.configure(takefocus="")
         self.comboBoxTestType.configure(values=strarrTestType)
         self.comboBoxTestType.configure(state="readonly")
-        self.comboBoxTestType.current(0)
-        global testType
-        testType = self.comboBoxTestType.get()
         # self.adjustViews()
 
         ''' 
@@ -431,7 +437,7 @@ class OOTO_Miner:
         self.labelFeatACount.configure(background="#d9d9d9")
         self.labelFeatACount.configure(disabledforeground="#a3a3a3")
         self.labelFeatACount.configure(foreground="#000000")
-        self.labelFeatACount.configure(text="Dataset Count: ")
+
 
 
         self.listFeatB = Listbox(self.labelFrameGenerateSamples)
@@ -454,7 +460,6 @@ class OOTO_Miner:
         self.labelFeatBCount.configure(background="#d9d9d9")
         self.labelFeatBCount.configure(disabledforeground="#a3a3a3")
         self.labelFeatBCount.configure(foreground="#000000")
-        self.labelFeatBCount.configure(text="Dataset Count: ")
 
         
         self.buttonSaveDatasets = Button(self.labelFrameGenerateSamples)
@@ -614,6 +619,7 @@ class OOTO_Miner:
         '''
         self.listFeatA.bind('<<ListboxSelect>>', self.selectValuesDatasetA)
         self.listFeatB.bind('<<ListboxSelect>>', self.selectValuesDatasetB)
+        self.listAttributes.bind('<<ListboxSelect>>', self.selectFocusFeatureValues)
 
 
         '''
@@ -626,11 +632,19 @@ class OOTO_Miner:
 
         global sampleFeature
         global selectedFocusFeature
+        global allValues
+        global selectedFocusFeatureValues 
+
         global populationDir
+        global Za
+        Za = 1.27
         populationDir = ""
         self.populationDataset = []
         self.datasetA = {'Data':[]}
         self.datasetB = {'Data':[]}
+
+        self.labelFeatACount.configure(text="Dataset Count: " + str(len(self.datasetA['Data'])))
+        self.labelFeatBCount.configure(text="Dataset Count: " + str(len(self.datasetB['Data']))) 
 
         self.labelFramePreprocessor = LabelFrame(self.Tabs_t2)
         self.labelFramePreprocessor.place(relx=0.01, rely=0.2, relheight=0.19
@@ -771,6 +785,17 @@ class OOTO_Miner:
         else:
             print "No dataset uploaded."
         print "Dataset A size: " + str(len(self.datasetA['Data']))
+        self.labelFeatACount.configure(text="Dataset Count: " + str(len(self.datasetA['Data'])))
+        
+    def selectFocusFeatureValues(self, evt):
+        global selectedFocusFeatureValues
+        listbox = evt.widget
+        selectedValues = [listbox.get(i) for i in listbox.curselection()]
+        selectedFocusFeatureValues = []
+        for sv in selectedValues:
+            valueArr = sv.split(" - ")
+            selectedFocusFeatureValues.append(valueArr[0])
+        
 
     def selectValuesDatasetB(self, evt):
         global populationDir
@@ -792,6 +817,7 @@ class OOTO_Miner:
         else:
             print "No dataset uploaded."
         print "Dataset B size: " + str(len(self.datasetB['Data']))
+        self.labelFeatBCount.configure(text="Dataset Count: " + str(len(self.datasetB['Data'])))
 
     # SET FEATURES A
     def setFeatA(self, evt):
@@ -842,14 +868,6 @@ class OOTO_Miner:
         sampleFeature = sampleCode
 
 
-    # GET FEATURE CODE AND SET FOCUS
-    # THIS FUNCTION HAS BEEN MIGRATED TO getFeat
-    '''
-    def setFocus(self, evt):
-        # Here is how to get the value from entryFocus
-        focusCode = self.entryFocus.get()
-        print 'Yo Focus', focusCode
-    '''
 
     # GENERATE AND SAVE THE DATASETS BASED ON THE INPUT
     def saveDataset(self, evt):
@@ -870,7 +888,7 @@ class OOTO_Miner:
             if feature['Code'] == featCode:
                 strFeature = feature['Code'] + " - " + feature['Description']
                 selectedFocusFeature = copy.deepcopy(feature)
-                for response in feature['Responses']:
+                for response in selectedFocusFeature['Responses']:
                     tempResp = response['Code'] + " - " + response['Description']
                     arrTempItemsC.append(tempResp)
                 break
@@ -889,12 +907,62 @@ class OOTO_Miner:
     # DO TEST BASED ON INPUTS AND DATASETS
     def test(self, evt):
         datasets = []
+        datasets.append(self.datasetA)
+        datasets.append(self.datasetB)
         print testType
         if(testType == 'Sample vs Population'):
             global selectedFocusFeature
             global sampleFeature
+            global Za
+            global allValues
+            global selectedFocusFeatureValues
+            global populationDir
+            print "Z Critical Value: " + str(Za)
             print "Focus Feature: " + selectedFocusFeature['Code']
             print "Sample Feature: " + sampleFeature
+
+            allValues = ""
+            for i in range(0, len(selectedFocusFeature['Responses'])):
+                if(i == len(selectedFocusFeature['Responses'])-1):
+                    allValues = allValues + str(selectedFocusFeature['Responses'][i]['Code'])
+                else:
+                    allValues = allValues + str(selectedFocusFeature['Responses'][i]['Code']) + ":"
+
+            print allValues
+
+            selectedValues = ""
+            for i in range(0, len(selectedFocusFeatureValues)):
+                if(i == len(selectedFocusFeatureValues)-1):
+                    selectedValues = selectedValues + str(selectedFocusFeatureValues[i])
+                else:
+                    selectedValues = selectedValues + str(selectedFocusFeatureValues[i]) + ":"
+            print selectedValues
+            saveFile = svp.sampleVsPopulation(populationDir, sampleFeature, selectedFocusFeature['Code'], allValues, selectedValues, Za)
+            tkMessageBox.showinfo(testType, testType + " completed. Results file saved as " + saveFile)
+        elif(testType == 'Sample vs Sample'):
+            global selectedFocusFeature
+            global Za
+            global allValues
+            global selectedFocusFeatureValues
+
+            allValues = ""
+            for i in range(0, len(selectedFocusFeature['Responses'])):
+                if(i == len(selectedFocusFeature['Responses'])-1):
+                    allValues = allValues + str(selectedFocusFeature['Responses'][i]['Code'])
+                else:
+                    allValues = allValues + str(selectedFocusFeature['Responses'][i]['Code']) + ":"
+
+            print allValues
+
+            selectedValues = ""
+            for i in range(0, len(selectedFocusFeatureValues)):
+                if(i == len(selectedFocusFeatureValues)-1):
+                    selectedValues = selectedValues + str(selectedFocusFeatureValues[i])
+                else:
+                    selectedValues = selectedValues + str(selectedFocusFeatureValues[i]) + ":"
+            print selectedValues
+            svs.sampleVsSample(datasets, selectedFocusFeature, allValues, selectedValues)
+            
         else:
             print "Dataset A: "
             print self.datasetA['Feature']
