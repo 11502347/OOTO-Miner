@@ -136,7 +136,7 @@ class OOTO_Miner:
         '''
         CHANGES HERE!
         '''
-        strarrTestType = ["Chi-test","Z-score statistics of pooled proportions","Standard Error of Population"]
+        strarrTestType = ["Chi-test","Sample vs Sample","Sample vs Population"]
         self.comboBoxTestType = ttk.Combobox(self.Tabs_t1)
         self.comboBoxTestType.place(relx=0.01, rely=0.02, relheight=0.04
                 , relwidth=0.49)
@@ -607,7 +607,8 @@ class OOTO_Miner:
         initVarDisc = "InitialVarDesc.csv"
         global features
         features = readFeatures(initVarDisc,"^")
-        
+
+        global sampleFeature
         global selectedFocusFeature
         global populationDir
         populationDir = ""
@@ -819,8 +820,11 @@ class OOTO_Miner:
     # GET FEATURE CODE AND SET SAMPLE
     def setSample(self, evt):
         # Here is how to get the value from entrySample
+        global sampleFeature
         sampleCode = self.entrySample.get()
         print 'Yo Sample', sampleCode
+        sampleFeature = sampleCode
+
 
     # GET FEATURE CODE AND SET FOCUS
     # THIS FUNCTION HAS BEEN MIGRATED TO getFeat
@@ -869,16 +873,27 @@ class OOTO_Miner:
     # DO TEST BASED ON INPUTS AND DATASETS
     def test(self, evt):
         datasets = []
-        print "Dataset A: "
-        print self.datasetA['Feature']
-        print self.datasetA['Selected Responses']
-        print "Dataset A size: " + str(len(self.datasetA['Data']))
-        print "Dataset B: "
-        print self.datasetB['Feature']
-        print self.datasetB['Selected Responses']
-        print "Dataset B size: " + str(len(self.datasetB['Data']))
-        datasets.append(self.datasetA)
-        datasets.append(self.datasetB)
+        print testType
+        if(testType == 'Sample vs Population'):
+            global selectedFocusFeature
+            global sampleFeature
+            print "Focus Feature: " + selectedFocusFeature['Code']
+            print "Sample Feature: " + sampleFeature
+        else:
+            print "Dataset A: "
+            print self.datasetA['Feature']
+            print self.datasetA['Selected Responses']
+            print "Dataset A size: " + str(len(self.datasetA['Data']))
+            print "Dataset B: "
+            print self.datasetB['Feature']
+            print self.datasetB['Selected Responses']
+            print "Dataset B size: " + str(len(self.datasetB['Data']))
+            datasets.append(self.datasetA)
+            datasets.append(self.datasetB)
+
+        
+        
+        
 
         
             
@@ -915,14 +930,12 @@ class OOTO_Miner:
             self.comboCriticalValue.configure(state='disabled')
             self.entryFocus.configure(state='disabled')
             self.entrySample.configure(state='disabled')
-            self.entryCriticalValue.configure(state='disabled')
             self.entryFocus.configure(state='disabled')
-        elif testType == 'Z-score statistics of pooled proportions':
+        elif testType == 'Sample vs Sample':
             self.buttonSample.configure(state='disabled')
             self.entrySample.configure(state='disabled')
-            self.entryCriticalValue.configure(state='disabled')
             self.comboCriticalValue.configure(state='disabled')
-        elif testType == 'Standard Error of Population':
+        elif testType == 'Sample vs Population':
             self.comboCriticalValue.configure(state='readonly')
             self.entryFeatA.configure(state='disabled')
             self.entryFeatB.configure(state='disabled')
