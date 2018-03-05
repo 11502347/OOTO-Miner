@@ -412,8 +412,7 @@ class OOTO_Miner:
         self.buttonShowB.configure(text='''Show Features B''')
 
         self.listFeatA = Listbox(self.labelFrameGenerateSamples)
-        self.listFeatA.place(relx=0.02, rely=0.31, relheight=0.58, relwidth=0.46)
-
+        self.listFeatA.place(relx=0.02, rely=0.41, relheight=0.48, relwidth=0.46)
         self.listFeatA.configure(background="white")
         self.listFeatA.configure(disabledforeground="#a3a3a3")
         self.listFeatA.configure(exportselection="0")
@@ -426,9 +425,17 @@ class OOTO_Miner:
         self.listFeatA.configure(width=224)
         self.listFeatA.configure(selectmode=MULTIPLE)
 
-        self.listFeatB = Listbox(self.labelFrameGenerateSamples)
-        self.listFeatB.place(relx=0.51, rely=0.31, relheight=0.58, relwidth=0.46)
+        #COUNT LABEL FOR DATASET A
+        self.labelFeatACount = Label(self.labelFrameGenerateSamples)
+        self.labelFeatACount.place(relx=0.02, rely=0.31, height=26, width=172)
+        self.labelFeatACount.configure(background="#d9d9d9")
+        self.labelFeatACount.configure(disabledforeground="#a3a3a3")
+        self.labelFeatACount.configure(foreground="#000000")
+        self.labelFeatACount.configure(text="Dataset Count: ")
 
+
+        self.listFeatB = Listbox(self.labelFrameGenerateSamples)
+        self.listFeatB.place(relx=0.51, rely=0.41, relheight=0.48, relwidth=0.46)
         self.listFeatB.configure(background="white")
         self.listFeatB.configure(disabledforeground="#a3a3a3")
         self.listFeatB.configure(exportselection="0")
@@ -440,6 +447,15 @@ class OOTO_Miner:
         self.listFeatB.configure(selectforeground="black")
         self.listFeatB.configure(width=224)
         self.listFeatB.configure(selectmode=MULTIPLE)
+
+        # COUNT LABEL FOR DATASET B
+        self.labelFeatBCount = Label(self.labelFrameGenerateSamples)
+        self.labelFeatBCount.place(relx=0.51, rely=0.31, height=26, width=172)
+        self.labelFeatBCount.configure(background="#d9d9d9")
+        self.labelFeatBCount.configure(disabledforeground="#a3a3a3")
+        self.labelFeatBCount.configure(foreground="#000000")
+        self.labelFeatBCount.configure(text="Dataset Count: ")
+
         
         self.buttonSaveDatasets = Button(self.labelFrameGenerateSamples)
         self.buttonSaveDatasets.place(relx=0.02, rely=0.91, height=33, width=466)
