@@ -713,6 +713,8 @@ class OOTO_Miner:
         self.datasetA = {'Data':[]}
         self.datasetB = {'Data':[]}
 
+        self.tests = []
+
         self.labelFeatACount.configure(text="Dataset Count: " + str(len(self.datasetA['Data'])))
         self.labelFeatBCount.configure(text="Dataset Count: " + str(len(self.datasetB['Data']))) 
 
