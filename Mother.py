@@ -92,8 +92,27 @@ def convertDatasetValuesToGroups(dataset, features):
                 record[feature['Code']] = '-1.0'
     return dataset
 
-def queueTest(testType, datasets):
-    print 'Queue'
+def addToQueue(testType, **params):
+    global tests
+    test = {'Type':testType}
+    if(test['Type'] == 'Sample vs Population'):
+        test['Population Path'] = params[popDirArg]
+        test['Sample Feature'] = params[sampleFeatArg]
+        test['Selected Feature'] = params[selectedFeatArg]
+        test['SF All Values'] = params[allValArg]
+        test['SF Selected Values'] = params[selValArg]
+    if(test['Type'] == 'Sample vs Sample'):
+        test['Datasets'] = params[datasetArgs]
+        test['Selected Feature'] = params[selectedFeatArg]
+        test['SF All Values'] = params[allValArg]
+        test['SF Selected Values'] = params[selValArg]
+    if(test['Type'] == 'Sample vs Chi-test'):
+        test['Datasets'] = params[datasetArgs]
+    tests.append(test)
+    
+    
+    
+
 
 def makeFileName(dataset):
     featureDesc = copy.deepcopy(dataset['Feature']['Description'])
@@ -202,7 +221,7 @@ class OOTO_Miner:
         '''
 
         self.buttonTest = Button(self.Tabs_t1)
-        self.buttonTest.place(relx=0.51, rely=0.93, height=33, width=230)
+        self.buttonTest.place(relx=0.76, rely=0.93, height=33, width=230)
         self.buttonTest.configure(activebackground="#d9d9d9")
         self.buttonTest.configure(activeforeground="#000000")
         self.buttonTest.configure(background="#d9d9d9")
@@ -214,7 +233,7 @@ class OOTO_Miner:
         self.buttonTest.configure(text='''Test''')
 
         self.buttonQueue = Button(self.Tabs_t1)
-        self.buttonQueue.place(relx=0.76, rely=0.93, height=33, width=230)
+        self.buttonQueue.place(relx=0.51, rely=0.93, height=33, width=230)
         self.buttonQueue.configure(activebackground="#d9d9d9")
         self.buttonQueue.configure(activeforeground="#000000")
         self.buttonQueue.configure(background="#d9d9d9")
@@ -719,6 +738,8 @@ class OOTO_Miner:
         global features
         features = readFeatures(initVarDisc,"^")
 
+        global testType
+        testType = ''
         global sampleFeature
         global selectedFocusFeature
         global allValues
@@ -732,7 +753,8 @@ class OOTO_Miner:
         self.datasetA = {'Data':[]}
         self.datasetB = {'Data':[]}
 
-        self.tests = []
+        global tests
+        tests = []
 
         self.labelFeatACount.configure(text="Dataset Count: " + str(len(self.datasetA['Data'])))
         self.labelFeatBCount.configure(text="Dataset Count: " + str(len(self.datasetB['Data']))) 
@@ -1046,9 +1068,25 @@ class OOTO_Miner:
             saveFile = ct.chiTest(fileNames)
             tkMessageBox.showinfo(testType, testType + " completed. Results file saved as " + saveFile)
         else:
-            tkMessageBox.showError("Error", "Please select a test")
+            tkMessageBox.showerror("Error: No test selected", "Please select a test")
 
+    def queue(self, evt):
+        datasets = []
+        datasets.append(self.datasetA)
+        datasets.append(self.datasetB)
+        global testType
+        if(testType == 'Sample vs Population'):
+            allValues, selectedValues = getFocusFeatureValues(selectedFocusFeature, selectedFocusFeatureValues)
+            addToQueue(testType, popDirArg = populationDir, sampleFeatArg = copy.copy(sampleFeature), selectedFeatArg = selectedFocusFeature['Code'], allValArg = allValues, selValArg = selectedValues, zArg = Za)
+        elif(testType == 'Sample vs Sample'):
+            allValues, selectedValues = getFocusFeatureValues(selectedFocusFeature, selectedFocusFeatureValues)
+            addToQueue(testType, datasetArgs = datasets, selectedFeatArg = selectedFocusFeature['Code'], allValArg = allValues, selValArg = selectedValues)
+        elif(testType == 'Chi-test'):
+            addToQueue(testType, datasetArgs=datasets)
+        else:
+            tkMessageBox.showerror("Error: No test selected", "Please select a test")
         
+               
         
         
 
@@ -1063,7 +1101,6 @@ class OOTO_Miner:
 
     # DISABLE BUTTONS/ENTRIES BASED ON TEST SELECTED
     def adjustViews(self):
-        print testType
         # ["Chi-test","Z-score statistics of pooled proportions","Standard Error of Population"]
         self.buttonGetFeat.configure(state='normal')
         self.labelZCriticalValue.configure(state='normal')
@@ -1124,9 +1161,7 @@ class OOTO_Miner:
             print -1
             Za = -1
 
-    def queue(self, evt):
-        print "enqueued"
-            
+    
            
             
 
