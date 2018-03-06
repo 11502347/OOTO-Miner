@@ -10,7 +10,7 @@ from tkFileDialog import askopenfilename
 import copy
 import SampleVsPopulation as svp
 import SampleVsSample as svs
-import ChiTest as ct
+# import ChiTest as ct
 
 try:
     from Tkinter import *
@@ -219,9 +219,8 @@ class OOTO_Miner:
         '''
         TAB 1 - TESTS
         '''
-
         self.buttonTest = Button(self.Tabs_t1)
-        self.buttonTest.place(relx=0.76, rely=0.93, height=33, width=230)
+        self.buttonTest.place(relx=0.877, rely=0.93, height=33, width=115)
         self.buttonTest.configure(activebackground="#d9d9d9")
         self.buttonTest.configure(activeforeground="#000000")
         self.buttonTest.configure(background="#d9d9d9")
@@ -232,8 +231,33 @@ class OOTO_Miner:
         self.buttonTest.configure(pady="0")
         self.buttonTest.configure(text='''Test''')
 
+
+        self.buttonTestQueue = Button(self.Tabs_t1)
+        self.buttonTestQueue.place(relx=0.744, rely=0.93, height=33, width=115)
+        self.buttonTestQueue.configure(activebackground="#d9d9d9")
+        self.buttonTestQueue.configure(activeforeground="#000000")
+        self.buttonTestQueue.configure(background="#d9d9d9")
+        self.buttonTestQueue.configure(disabledforeground="#a3a3a3")
+        self.buttonTestQueue.configure(foreground="#000000")
+        self.buttonTestQueue.configure(highlightbackground="#d9d9d9")
+        self.buttonTestQueue.configure(highlightcolor="black")
+        self.buttonTestQueue.configure(pady="0")
+        self.buttonTestQueue.configure(text='''Test Queue''')
+
+        self.buttonClearQueue = Button(self.Tabs_t1)
+        self.buttonClearQueue.place(relx=0.627, rely=0.93, height=33, width=115)
+        self.buttonClearQueue.configure(activebackground="#d9d9d9")
+        self.buttonClearQueue.configure(activeforeground="#000000")
+        self.buttonClearQueue.configure(background="#d9d9d9")
+        self.buttonClearQueue.configure(disabledforeground="#a3a3a3")
+        self.buttonClearQueue.configure(foreground="#000000")
+        self.buttonClearQueue.configure(highlightbackground="#d9d9d9")
+        self.buttonClearQueue.configure(highlightcolor="black")
+        self.buttonClearQueue.configure(pady="0")
+        self.buttonClearQueue.configure(text='''Clear Queue''')
+
         self.buttonQueue = Button(self.Tabs_t1)
-        self.buttonQueue.place(relx=0.51, rely=0.93, height=33, width=230)
+        self.buttonQueue.place(relx=0.51, rely=0.93, height=33, width=115)
         self.buttonQueue.configure(activebackground="#d9d9d9")
         self.buttonQueue.configure(activeforeground="#000000")
         self.buttonQueue.configure(background="#d9d9d9")
@@ -242,7 +266,7 @@ class OOTO_Miner:
         self.buttonQueue.configure(highlightbackground="#d9d9d9")
         self.buttonQueue.configure(highlightcolor="black")
         self.buttonQueue.configure(pady="0")
-        self.buttonQueue.configure(text='''Queue''')
+        self.buttonQueue.configure(text='''Enqueue''')
 
         '''
         CHANGES HERE!
@@ -609,7 +633,7 @@ class OOTO_Miner:
         self.entryFeatB.configure(selectbackground="#c4c4c4")
         self.entryFeatB.configure(selectforeground="black")
         '''
-        BINDING ELEMENTS
+        BINDING ELEMENTS FOR TAB 1
         notes: bind the functions as objects ( ie. setPopulation not setPopulation() )
         <Button-1> On left click
         <<ComboboxSelected>> On select in ComboBox
@@ -625,6 +649,8 @@ class OOTO_Miner:
         self.buttonGetFeat.bind('<Button-1>', self.getFeat)
         self.buttonTest.bind('<Button-1>', self.test)
         self.buttonQueue.bind('<Button-1>', self.queue)
+        self.buttonClearQueue.bind('<Button-1>', self.clearQueue)
+        self.buttonTestQueue.bind('<Button-1>', self.testQueue)
 
         self.comboBoxTestType.bind('<<ComboboxSelected>>', self.setTest)
 
@@ -1085,8 +1111,13 @@ class OOTO_Miner:
             addToQueue(testType, datasetArgs=datasets)
         else:
             tkMessageBox.showerror("Error: No test selected", "Please select a test")
-        
-               
+
+    def testQueue(self, evt):
+        print "Testing queued jobs"
+
+    def clearQueue(self, evt):
+        print "Queue has been cleared"
+        tkMessageBox.showwarning('Warning', 'This cannot be undone')
         
         
 
