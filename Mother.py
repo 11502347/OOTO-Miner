@@ -201,7 +201,7 @@ class OOTO_Miner:
         '''
 
         self.buttonTest = Button(self.Tabs_t1)
-        self.buttonTest.place(relx=0.51, rely=0.93, height=33, width=486)
+        self.buttonTest.place(relx=0.51, rely=0.93, height=33, width=230)
         self.buttonTest.configure(activebackground="#d9d9d9")
         self.buttonTest.configure(activeforeground="#000000")
         self.buttonTest.configure(background="#d9d9d9")
@@ -211,6 +211,18 @@ class OOTO_Miner:
         self.buttonTest.configure(highlightcolor="black")
         self.buttonTest.configure(pady="0")
         self.buttonTest.configure(text='''Test''')
+
+        self.buttonQueue = Button(self.Tabs_t1)
+        self.buttonQueue.place(relx=0.76, rely=0.93, height=33, width=230)
+        self.buttonQueue.configure(activebackground="#d9d9d9")
+        self.buttonQueue.configure(activeforeground="#000000")
+        self.buttonQueue.configure(background="#d9d9d9")
+        self.buttonQueue.configure(disabledforeground="#a3a3a3")
+        self.buttonQueue.configure(foreground="#000000")
+        self.buttonQueue.configure(highlightbackground="#d9d9d9")
+        self.buttonQueue.configure(highlightcolor="black")
+        self.buttonQueue.configure(pady="0")
+        self.buttonQueue.configure(text='''Queue''')
 
         '''
         CHANGES HERE!
@@ -298,7 +310,7 @@ class OOTO_Miner:
         self.labelZCriticalValue.configure(foreground="#000000")
         self.labelZCriticalValue.configure(highlightbackground="#d9d9d9")
         self.labelZCriticalValue.configure(highlightcolor="black")
-        self.labelZCriticalValue.configure(text='''Z-Critical Value''')
+        self.labelZCriticalValue.configure(text='''Confidence Interval''')
 
         self.labelFeature = Label(self.labelFrameZTest)
         self.labelFeature.place(relx=0.02, rely=0.17, height=26, width=55)
@@ -402,7 +414,7 @@ class OOTO_Miner:
         self.labelFrameGenerateSamples.configure(width=490)
 
         self.entrySample = Entry(self.labelFrameGenerateSamples)
-        self.entrySample.place(relx=0.25, rely=0.05, relheight=0.05
+        self.entrySample.place(relx=0.02, rely=0.05, relheight=0.05
                 , relwidth=0.46)
         self.entrySample.configure(background="white")
         self.entrySample.configure(disabledforeground="#a3a3a3")
@@ -414,8 +426,13 @@ class OOTO_Miner:
         self.entrySample.configure(selectbackground="#c4c4c4")
         self.entrySample.configure(selectforeground="black")
 
+        self.labelSample = Label(self.labelFrameGenerateSamples)
+        self.labelSample.place(relx=0.02, rely=0.11, relheight=0.05, relwidth=0.95)
+        self.labelSample.configure(text='''SAMPLE FEATURE : ''')
+        self.labelSample.configure(justify=LEFT)
+
         self.entryFocus = Entry(self.labelFrameZTest)
-        self.entryFocus.place(relx=0.25, rely=0.11, relheight=0.04, relwidth=0.38)
+        self.entryFocus.place(relx=0.43, rely=0.11, relheight=0.04, relwidth=0.2)
         self.entryFocus.configure(background="white")
         self.entryFocus.configure(disabledforeground="#a3a3a3")
         self.entryFocus.configure(font="TkFixedFont")
@@ -438,7 +455,7 @@ class OOTO_Miner:
         '''
 
         self.buttonSample = Button(self.labelFrameGenerateSamples)
-        self.buttonSample.place(relx=0.25, rely=0.11, height=23, width=226)
+        self.buttonSample.place(relx=0.51, rely=0.05, height=23, width=226)
         self.buttonSample.configure(activebackground="#d9d9d9")
         self.buttonSample.configure(activeforeground="#000000")
         self.buttonSample.configure(background="#d9d9d9")
@@ -587,6 +604,7 @@ class OOTO_Miner:
         self.buttonSaveDatasets.bind('<Button-1>', self.saveDataset)
         self.buttonGetFeat.bind('<Button-1>', self.getFeat)
         self.buttonTest.bind('<Button-1>', self.test)
+        self.buttonQueue.bind('<Button-1>', self.queue)
 
         self.comboBoxTestType.bind('<<ComboboxSelected>>', self.setTest)
 
@@ -1102,6 +1120,9 @@ class OOTO_Miner:
         else:
             print -1
             Za = -1
+
+    def queue(self, evt):
+        print "enqueued"
             
            
             
