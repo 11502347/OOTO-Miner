@@ -10,7 +10,7 @@ from tkFileDialog import askopenfilename
 import copy
 import SampleVsPopulation as svp
 import SampleVsSample as svs
-# import ChiTest as ct
+import ChiTest as ct
 
 try:
     from Tkinter import *
@@ -219,6 +219,10 @@ class OOTO_Miner:
         '''
         TAB 1 - TESTS
         '''
+        self.labelQueueCount = Label(self.Tabs_t1)
+        self.labelQueueCount.place(relx=0.64, rely=0.86, height=33, width=210)
+        self.labelQueueCount.configure(text='''QUEUE COUNT: ''')
+
         self.buttonTest = Button(self.Tabs_t1)
         self.buttonTest.place(relx=0.877, rely=0.93, height=33, width=115)
         self.buttonTest.configure(activebackground="#d9d9d9")
@@ -334,7 +338,7 @@ class OOTO_Miner:
         self.buttonPopulation.configure(text='''Upload Population''')
 
         self.labelFrameZTest = LabelFrame(self.Tabs_t1)
-        self.labelFrameZTest.place(relx=0.51, rely=0.0, relheight=0.93
+        self.labelFrameZTest.place(relx=0.51, rely=0.0, relheight=0.85
                 , relwidth=0.48)
         self.labelFrameZTest.configure(relief=GROOVE)
         self.labelFrameZTest.configure(foreground="black")
@@ -392,6 +396,8 @@ class OOTO_Miner:
         self.listAttributes.configure(selectforeground="black")
         self.listAttributes.configure(width=454)
         self.listAttributes.configure(selectmode=MULTIPLE)
+
+
 
         '''
         self.entryCriticalValue = Entry(self.labelFrameZTest)
