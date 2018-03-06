@@ -110,9 +110,8 @@ def getStandardError(PPrime, n1, n2):
     return math.sqrt(PPrime * (1-PPrime) * temp)
 
 def sampleVsSample(datasetPaths, selectedFeature, featureValues, selectedFeatureValues):
-  datasetPaths = []
-  for dataset in datasetPaths:
-    print len(dataset['Data'])
+  for datasetPath in datasetPaths:
+    print datasetPath
   '''
   datasetPaths.append(sys.argv[2]) #File path of Dataset 1
   datasetPaths.append(sys.argv[3]) #File path of Dataset 2
@@ -204,6 +203,7 @@ def sampleVsSample(datasetPaths, selectedFeature, featureValues, selectedFeature
 
   summaryName = 'Sample vs Sample_' + selectedFeature+ '_' + datasets[0]['Name'] + '_VS_' + datasets[1]['Name'] + '.csv'
   writeOnCSV(summary, summaryName)
+  return summaryName
 
 
 

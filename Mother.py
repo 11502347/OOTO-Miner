@@ -10,6 +10,7 @@ from tkFileDialog import askopenfilename
 import copy
 import SampleVsPopulation as svp
 import SampleVsSample as svs
+import ChiTest as ct
 
 try:
     from Tkinter import *
@@ -69,11 +70,63 @@ def readCSVDict(filename):
     return rows   
 
 def writeCSVDict(filename, dataset):
-    f = open(filename,'wb')
-    for i in range(0, len(dataset)):
-        w = csv.DictWriter(f,dataset[i].keys())
-        w.writerow(dataset[i])
-    f.close()
+    with open(filename, 'wb') as f:
+        w = csv.DictWriter(f, dataset[0].keys())
+        w.writeheader()
+        w.writerows(dataset)
+
+def convertDatasetValuesToGroups(dataset, features):
+    #response['Code'] == record[self.datasetA['Feature']['Code']] for response in self.datasetA['Selected Responses']
+    for record in dataset['Data']:
+        for feature in features:
+            converted = False
+            if feature['Code'] in record.keys(): #If the feature code exists in the record
+                for response in feature['Responses']:
+                    if record[feature['Code']] == response['Code']:
+                        record[feature['Code']] = response['Group']
+                        converted = True
+                #if not any(record[feature['Code'] == response['Code'] for response in feature['Responses']):
+                if not converted:
+                    record[feature['Code']] = '-1.0'
+            else:
+                record[feature['Code']] = '-1.0'
+    return dataset
+
+
+
+def makeFileName(dataset):
+    featureDesc = copy.deepcopy(dataset['Feature']['Description'])
+    if(len(featureDesc) > 10):
+        featureDesc = featureDesc[:11]
+    fileName = featureDesc
+    for response in dataset['Selected Responses']:
+        fileName = fileName + response['Description'] + " "
+    fileName = fileName + ".csv"
+    return fileName
+
+def makeUpdatedVariables(features, fileName):
+    with open(fileName, "wb") as csv_file:
+        writer = csv.writer(csv_file, delimiter=',')
+        for feature in features:
+            featureRow = []
+            featureRow.append('^')
+            featureRow.append(feature['Code'])
+            featureRow.append(feature['Description'])
+            #Write that featureRow
+            writer.writerow(featureRow)
+            groups = [] 
+            for response in feature['Responses']: 
+                responseRow = []
+                if response['Group'] not in groups:
+                    groups.append(response['Group'])
+                    responseRow.append(response['Group'])
+                    responseRow.append('Group ' + response['Group'])
+                    #Write that responseRow
+                    writer.writerow(responseRow)
+
+    
+            
+
 
 def getData(code, selectedValues):
     data = []
@@ -82,6 +135,23 @@ def getData(code, selectedValues):
             data.append(record)
     
     return data
+
+def getFocusFeatureValues(selectedFocusFeature, selectedFocusFeatureValues):
+    allValues = ""
+    for i in range(0, len(selectedFocusFeature['Responses'])):
+        if(i == len(selectedFocusFeature['Responses'])-1):
+            allValues = allValues + str(selectedFocusFeature['Responses'][i]['Code'])
+        else:
+            allValues = allValues + str(selectedFocusFeature['Responses'][i]['Code']) + ":"          
+    selectedValues = ""
+    for i in range(0, len(selectedFocusFeatureValues)):
+        if(i == len(selectedFocusFeatureValues)-1):
+            selectedValues = selectedValues + str(selectedFocusFeatureValues[i])
+        else:
+            selectedValues = selectedValues + str(selectedFocusFeatureValues[i]) + ":"
+
+    return allValues, selectedValues
+
 
 
 class OOTO_Miner:
@@ -508,7 +578,7 @@ class OOTO_Miner:
         <<ComboboxSelected>> On select in ComboBox
         CHANGES HERE!
         '''
-        print 'binding elements'
+
         self.buttonPopulation.bind('<Button-1>', self.setPopulation)
         self.buttonSample.bind('<Button-1>', self.setSample)
         # self.buttonFocus.bind('<Button-1>', self.setFocus)
@@ -872,7 +942,13 @@ class OOTO_Miner:
     # GENERATE AND SAVE THE DATASETS BASED ON THE INPUT
     def saveDataset(self, evt):
         # Save dataset
-        print 'SAVING YO'
+        datasets=[]
+        datasets.append(self.datasetA)
+        datasets.append(self.datasetB)
+        for dataset in datasets:
+            if(len(dataset['Data']) > 0):
+                fileName = makeFileName(dataset)
+                writeCSVDict(fileName, dataset['Data'])
 
     # GET FEATURE CODE FOR Z TEST / SET FOCUS
     def getFeat(self, evt):
@@ -907,73 +983,49 @@ class OOTO_Miner:
     # DO TEST BASED ON INPUTS AND DATASETS
     def test(self, evt):
         datasets = []
+        fileNames = []
         datasets.append(self.datasetA)
         datasets.append(self.datasetB)
-        print testType
+        global selectedFocusFeature
+        global sampleFeature
+        global Za
+        global allValues
+        global selectedFocusFeatureValues
+        global populationDir
+        global features
         if(testType == 'Sample vs Population'):
-            global selectedFocusFeature
-            global sampleFeature
-            global Za
-            global allValues
-            global selectedFocusFeatureValues
-            global populationDir
             print "Z Critical Value: " + str(Za)
             print "Focus Feature: " + selectedFocusFeature['Code']
             print "Sample Feature: " + sampleFeature
-
-            allValues = ""
-            for i in range(0, len(selectedFocusFeature['Responses'])):
-                if(i == len(selectedFocusFeature['Responses'])-1):
-                    allValues = allValues + str(selectedFocusFeature['Responses'][i]['Code'])
-                else:
-                    allValues = allValues + str(selectedFocusFeature['Responses'][i]['Code']) + ":"
-
+            allValues, selectedValues = getFocusFeatureValues(selectedFocusFeature, selectedFocusFeatureValues)
             print allValues
-
-            selectedValues = ""
-            for i in range(0, len(selectedFocusFeatureValues)):
-                if(i == len(selectedFocusFeatureValues)-1):
-                    selectedValues = selectedValues + str(selectedFocusFeatureValues[i])
-                else:
-                    selectedValues = selectedValues + str(selectedFocusFeatureValues[i]) + ":"
             print selectedValues
             saveFile = svp.sampleVsPopulation(populationDir, sampleFeature, selectedFocusFeature['Code'], allValues, selectedValues, Za)
             tkMessageBox.showinfo(testType, testType + " completed. Results file saved as " + saveFile)
         elif(testType == 'Sample vs Sample'):
-            global selectedFocusFeature
-            global Za
-            global allValues
-            global selectedFocusFeatureValues
-
-            allValues = ""
-            for i in range(0, len(selectedFocusFeature['Responses'])):
-                if(i == len(selectedFocusFeature['Responses'])-1):
-                    allValues = allValues + str(selectedFocusFeature['Responses'][i]['Code'])
-                else:
-                    allValues = allValues + str(selectedFocusFeature['Responses'][i]['Code']) + ":"
-
+            allValues, selectedValues = getFocusFeatureValues(selectedFocusFeature, selectedFocusFeatureValues)
             print allValues
-
-            selectedValues = ""
-            for i in range(0, len(selectedFocusFeatureValues)):
-                if(i == len(selectedFocusFeatureValues)-1):
-                    selectedValues = selectedValues + str(selectedFocusFeatureValues[i])
-                else:
-                    selectedValues = selectedValues + str(selectedFocusFeatureValues[i]) + ":"
             print selectedValues
-            svs.sampleVsSample(datasets, selectedFocusFeature, allValues, selectedValues)
-            
+            for i in range(0, len(datasets)):
+                fileName = "Dataset " + str(i) + ".csv"
+                writeCSVDict(fileName, datasets[i]['Data'])
+                fileNames.append(fileName)
+            saveFile = svs.sampleVsSample(fileNames, selectedFocusFeature['Code'], allValues, selectedValues)
+            tkMessageBox.showinfo(testType, testType + " completed. Results file saved as " + saveFile)
+        elif(testType == 'Chi-test'):
+            print "Chi-test"
+            i = 0
+            for dataset in datasets:
+                convertDatasetValuesToGroups(dataset, features)
+                fileName = "Dataset " + str(i) + ".csv"
+                i = i + 1
+                writeCSVDict(fileName, dataset['Data'])
+                fileNames.append(fileName)
+            makeUpdatedVariables(features, "Updated-Variables.csv")
+            saveFile = ct.chiTest(fileNames)
+            tkMessageBox.showinfo(testType, testType + " completed. Results file saved as " + saveFile)
         else:
-            print "Dataset A: "
-            print self.datasetA['Feature']
-            print self.datasetA['Selected Responses']
-            print "Dataset A size: " + str(len(self.datasetA['Data']))
-            print "Dataset B: "
-            print self.datasetB['Feature']
-            print self.datasetB['Selected Responses']
-            print "Dataset B size: " + str(len(self.datasetB['Data']))
-            datasets.append(self.datasetA)
-            datasets.append(self.datasetB)
+            tkMessageBox.showError("Error", "Please select a test")
 
         
         
