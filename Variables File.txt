@@ -4,6 +4,7 @@
 a9 = "Main language spoken at home"
 reg1 = "Region"
 prov1 = "Province"
+ur1 = "Urban or Rural"
 
 a1 = "Gender"
 

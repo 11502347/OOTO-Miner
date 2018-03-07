@@ -55,6 +55,9 @@ w,23, Surigao del Sur
 x,24, Occidental Mindoro
 y,25, Negros Occidental
 z,26, Maguindanao
+^,ur1,Urban or Rural
+a,0, Rural
+b,1, Urban
 ^,a1,Gender
 a,1, Male
 b,2, Female
